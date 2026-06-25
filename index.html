@@ -721,27 +721,26 @@
                 valor_total: document.getElementById('valor_total').value
             };
 
-            // ===== ENVÍO AL GOOGLE APPS SCRIPT (CORS habilitado) =====
-            // El script ya devuelve cabeceras Access-Control-Allow-Origin: *
-            // por eso ahora podemos leer la respuesta real y confirmar el guardado.
+            // ===== ENVÍO AL GOOGLE APPS SCRIPT =====
+            // Usamos Content-Type: text/plain para evitar el preflight CORS.
+            // Google Apps Script no soporta doOptions() con setHeaders() de forma
+            // fiable. Con text/plain el navegador envía directo sin preflight OPTIONS.
+            // El script recibe el JSON como string y lo parsea con JSON.parse().
             try {
-                const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify(data)
                 });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    formStatus.textContent = '✅ ¡Registro guardado correctamente! Bienvenido a Reserva San Diego 112.';
-                    formStatus.className = 'form-status show success';
-                    form.reset();
-                    checkinEl.setAttribute('min', today);
-                } else {
-                    formStatus.textContent = '❌ El servidor reportó un error: ' + (result.message || 'desconocido');
-                    formStatus.className = 'form-status show error';
-                }
+                // Con no-cors la respuesta es opaca (no se puede leer),
+                // pero si no hay excepción el fetch llegó al servidor.
+                formStatus.textContent = '✅ ¡Registro enviado! Bienvenido a Reserva San Diego 112.';
+                formStatus.className = 'form-status show success';
+                form.reset();
+                checkinEl.setAttribute('min', today);
             } catch (error) {
-                formStatus.textContent = '❌ No se pudo conectar con el servidor. Verifique su conexión e intente nuevamente.';
+                formStatus.textContent = '❌ Error de red. Verifique su conexión e intente nuevamente.';
                 formStatus.className = 'form-status show error';
             } finally {
                 submitBtn.classList.remove('loading');
