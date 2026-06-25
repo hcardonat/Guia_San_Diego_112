@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía digital para huéspedes de Reserva San Diego 112, Loma del Indio, Medellín">
+    <meta name="theme-color" content="#2d6a4f">
+    <title>🏙️ Reserva San Diego 112 · Guía del Huésped</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏙️</text></svg>">
+
+    <style>
+        /* ===== VARIABLES DE COLOR Y DISEÑO ===== */
+        :root {
+            --primary:       #2d6a4f;   /* verde bosque */
+            --primary-dark:  #1b4332;   /* verde oscuro */
+            --secondary:     #c17f4a;   /* terracota */
+            --bg:            #f4f1ec;   /* crema cálido */
+            --card:          #ffffff;
+            --text:          #2c2c2c;
+            --text-light:    #666666;
+            --border:        #ddd8d0;
+            --success:       #2d6a4f;
+            --error:         #c0392b;
+            --shadow:        0 2px 8px rgba(0,0,0,0.08);
+            --radius:        14px;
+        }
+
+        /* ===== RESET BÁSICO ===== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            padding-bottom: 72px; /* espacio para la nav inferior fija */
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER STICKY ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            padding: 18px 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+        .header .subtitle { font-size: 0.9rem; opacity: 0.95; }
+        .header .chips {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .chip {
+            background: rgba(255,255,255,0.18);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 0.78rem;
+        }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* ===== SECCIONES (TABS) ===== */
+        .section { display: none; }
+        .section.active { display: block; animation: fade 0.25s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+        .section-title {
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+        .card h3 { font-size: 1.05rem; color: var(--primary-dark); margin-bottom: 8px; }
+        .card h4 { font-size: 0.95rem; color: var(--secondary); margin: 8px 0 4px; }
+        .card p { color: var(--text-light); font-size: 0.92rem; margin-bottom: 6px; }
+        .card .highlight {
+            background: #eef4f0;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-top: 8px;
+        }
+
+        /* ===== TABLAS ===== */
+        .table-wrap { overflow-x: auto; margin: 6px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+        th { background: #eef4f0; color: var(--primary-dark); font-weight: 600; }
+        td { color: var(--text-light); }
+
+        /* ===== ACORDEONES ===== */
+        .accordion {
+            background: var(--card);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-dark);
+            gap: 8px;
+        }
+        .accordion-header .arrow { transition: transform 0.3s ease; color: var(--secondary); }
+        .accordion.active .accordion-header .arrow { transform: rotate(180deg); }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 16px;
+        }
+        .accordion.active .accordion-body { max-height: 2000px; padding: 0 16px 16px; }
+
+        /* ===== FORMULARIO ===== */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #fff;
+        }
+        .form-group input:focus,
+        .form-group select:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover { background: var(--primary-dark); }
+        .submit-btn.loading { opacity: 0.7; pointer-events: none; }
+
+        .form-status {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .form-status.show { display: block; }
+        .form-status.success { background: #e7f3ec; color: var(--success); }
+        .form-status.error { background: #fbe9e7; color: var(--error); }
+
+        /* ===== LISTA DE FARMACIAS / APPS ===== */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .list-item:last-child { border-bottom: none; }
+        .list-item .ico { font-size: 1.2rem; }
+
+        /* ===== NAVEGACIÓN INFERIOR ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+        .nav-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 8px 4px;
+            font-size: 0.68rem;
+            color: var(--text-light);
+            cursor: pointer;
+            font-family: inherit;
+            border-top: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .nav-btn .nav-ico { display: block; font-size: 1.25rem; margin-bottom: 2px; }
+        .nav-btn.active { color: var(--primary); border-top-color: var(--primary); }
+
+        /* ===== BOTONES FLOTANTES ===== */
+        .floating-buttons {
+            position: fixed;
+            right: 16px;
+            bottom: 84px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 99;
+        }
+        .fab {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+        }
+        .fab-emergency { background: var(--error); }
+        .fab-whatsapp { background: #25d366; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 24px 16px;
+            color: var(--text-light);
+            font-size: 0.82rem;
+        }
+        .footer strong { color: var(--primary-dark); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .form-row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <h1>🏙️ Reserva San Diego 112</h1>
+        <div class="subtitle">Loma del Indio · Medellín, Colombia</div>
+        <div class="chips">
+            <span class="chip">Estrato 4–5</span>
+            <span class="chip">1.550–1.650 msnm</span>
+            <span class="chip">21–24 °C</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ============================================================= -->
+        <!-- ===== SECCIÓN INICIO ===== -->
+        <!-- ============================================================= -->
+        <section id="inicio" class="section active">
+            <h2 class="section-title">👋 Bienvenido</h2>
+
+            <div class="card">
+                <p>La Reserva de San Diego (Carrera 28 No. 29-85) se encuentra en uno de los sectores más estratégicos de Medellín: las laderas orientales con acceso directo al Túnel de Oriente, conexión al Tranvía de Ayacucho y vistas panorámicas del Valle de Aburrá.</p>
+                <p>Esta zona residencial de estrato 4–5 combina la tranquilidad de un barrio tradicional con la modernidad de unidades cerradas y centros comerciales cercanos. El sector está entre 1.550 y 1.650 metros sobre el nivel del mar, con clima primaveral todo el año (21–24 °C).</p>
+                <div class="highlight">El sector limita con el Cerro La Asomadera, un área natural protegida de 26,63 hectáreas a pocos minutos a pie.</div>
+            </div>
+
+            <!-- ===== ACORDEÓN: CÓMO LLEGAR DESDE EL AEROPUERTO ===== -->
+            <div class="accordion" data-accordion>
+                <div class="accordion-header">
+                    <span>✈️ Cómo llegar desde el aeropuerto</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>El Aeropuerto Internacional José María Córdova (MDE) está a unos 29–35 km del sector. La ruta más rápida es por el Túnel de Oriente (25–35 min); la vía escénica por Las Palmas toma 40–50 min.</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Opción</th><th>Costo aprox.</th><th>Notas</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Taxi amarillo oficial</td><td>$118.000–120.000 COP</td><td>Tarifa fija con peajes incluidos, 24/7</td></tr>
+                                <tr><td>Uber / DiDi / InDriver</td><td>$80.000–110.000 COP</td><td>Precio dinámico según demanda</td></tr>
+                                <tr><td>Combuses (bus San Diego)</td><td>$9.500 COP</td><td>Sale del C.C. San Diego cada 15 min</td></tr>
+                                <tr><td>Taxi compartido blanco</td><td>~$30.000 COP por persona</td><td>Salen cuando se llenan desde zona San Diego</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight"><strong>Opción económica:</strong> bus Combuses hasta San Diego ($9.500) + taxi/Uber hasta Loma del Indio (~$12.000). Total aproximado: <strong>$22.000 COP</strong>.</div>
+                </div>
+            </div>
+
+            <!-- ===== ACORDEÓN: METRO Y TRANVÍA ===== -->
+            <div class="accordion" data-accordion>
+                <div class="accordion-header">
+                    <span>🚉 Metro y Tranvía cercanos</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>El sector tiene excelente conectividad gracias al Tranvía de Ayacucho (Línea T), inaugurado en 2016.</p>
+                    <h4>Estaciones más cercanas</h4>
+                    <p>• <strong>Bicentenario</strong> – la más cercana (~15 min caminando)<br>
+                       • <strong>Buenos Aires</strong> – cerca de Carrera 30 (~10–15 min)<br>
+                       • <strong>Miraflores</strong> – conecta con Metrocable Línea M (~20 min)</p>
+                    <div class="highlight">Tarifa Metro/Tranvía (2025): <strong>$3.430 COP</strong> con tarjeta Cívica · $3.900 COP tarifa ocasional.</div>
+                </div>
+            </div>
+
+            <!-- ===== ACORDEÓN: CERRO LA ASOMADERA ===== -->
+            <div class="accordion" data-accordion>
+                <div class="accordion-header">
+                    <span>🌳 Cerro La Asomadera</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>Área natural protegida a pocos minutos caminando. Horario: 5:30 AM – 6:00 PM. Acceso: buses 091 o 13.</p>
+                    <p>• 2,6+ km de senderos marcados<br>
+                       • Piscina gratuita INDER (Mar–Vie 8am–5pm, Sáb 8am–3pm, Dom 8am–4pm)<br>
+                       • Mirador natural con vista 360° del Valle de Aburrá<br>
+                       • 152+ especies de árboles nativos y 42+ especies de aves<br>
+                       • Mariposario, meliponario y vivero pedagógico<br>
+                       • Zona de camping y juegos infantiles</p>
+                </div>
+            </div>
+
+            <!-- ===== ACORDEÓN: CENTROS COMERCIALES ===== -->
+            <div class="accordion" data-accordion>
+                <div class="accordion-header">
+                    <span>🛒 Centros comerciales y supermercados</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Mall</th><th>Dirección</th><th>Destacados</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Mall El Indio</td><td>Cra 38 # 26-279</td><td>D1, Fruver, farmacia, comidas rápidas. 7am–8pm</td></tr>
+                                <tr><td>Mall Loma del Indio</td><td>Cra 37a # 29-59</td><td>L–S 8am–8pm · Dom 9am–6pm</td></tr>
+                                <tr><td>Mall Palms Avenue</td><td>Cl 18 # 35-69, Vía Las Palmas</td><td>Carulla, restaurantes, Café Oma</td></tr>
+                                <tr><td>Palmagrande Mall</td><td>Cra 38 # 18-101, Vía Las Palmas</td><td>Euro Supermercado, food court</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Supermercados</h4>
+                    <p>D1 (Mall El Indio) · Carulla Las Palmas (premium) · Euro Supermercado (Palmagrande) · Fruver (Mall El Indio)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- ===== SECCIÓN REGISTRO DE HUÉSPEDES ===== -->
+        <!-- ============================================================= -->
+        <section id="registro" class="section">
+            <h2 class="section-title">📋 Registro de huéspedes</h2>
+            <div class="card">
+                <p>Complete este formulario de registro para todos los huéspedes mayores de edad. Los campos marcados con <strong>*</strong> son obligatorios.</p>
+
+                <form id="registration-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipo_id">Tipo documento *</label>
+                            <select id="tipo_id" required>
+                                <option value="">Seleccione...</option>
+                                <option value="CC">Cédula Ciudadanía</option>
+                                <option value="CE">Cédula Extranjería</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="TI">Tarjeta Identidad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero_id">Número documento *</label>
+                            <input type="text" id="numero_id" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombres">Nombres *</label>
+                            <input type="text" id="nombres" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellidos">Apellidos *</label>
+                            <input type="text" id="apellidos" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ciudad_residencia">Ciudad residencia *</label>
+                            <input type="text" id="ciudad_residencia" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ciudad_procedencia">Ciudad procedencia *</label>
+                            <input type="text" id="ciudad_procedencia" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="habitacion">Habitación *</label>
+                            <select id="habitacion" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Principal">Principal</option>
+                                <option value="Secundaria">Secundaria</option>
+                                <option value="Completo">Apto. Completo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="acompanantes">Acompañantes</label>
+                            <input type="number" id="acompanantes" min="0" max="10" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="motivo_viaje">Motivo viaje *</label>
+                            <select id="motivo_viaje" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Turismo">Turismo</option>
+                                <option value="Negocios">Negocios</option>
+                                <option value="Estudios">Estudios</option>
+                                <option value="Salud">Salud</option>
+                                <option value="Familiar">Familiar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo_acomodacion">Acomodación *</label>
+                            <select id="tipo_acomodacion" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Individual">Individual</option>
+                                <option value="Doble">Doble</option>
+                                <option value="Triple">Triple</option>
+                                <option value="Familiar">Familiar</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin">Check-in *</label>
+                            <input type="date" id="checkin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Check-out *</label>
+                            <input type="date" id="checkout" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full" style="margin-bottom:14px;">
+                        <label for="valor_total">Valor total (COP) *</label>
+                        <input type="number" id="valor_total" min="0" step="1000" placeholder="Ej: 250000" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">Enviar registro</button>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- ===== SECCIÓN MOVERSE ===== -->
+        <!-- ============================================================= -->
+        <section id="moverse" class="section">
+            <h2 class="section-title">🚌 Moverse por la ciudad</h2>
+
+            <div class="card">
+                <h3>Apps de transporte verificadas</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>App</th><th>Pago</th><th>Notas</th></tr></thead>
+                        <tbody>
+                            <tr><td>Uber</td><td>Tarjeta, efectivo</td><td>Muy usado; puede requerir sentarse adelante</td></tr>
+                            <tr><td>InDriver</td><td>Efectivo preferido</td><td>Negociación de precio, muy popular</td></tr>
+                            <tr><td>DiDi</td><td>Tarjeta, efectivo</td><td>Precios competitivos</td></tr>
+                            <tr><td>Beat</td><td>Tarjeta, efectivo</td><td>25–30% más económico que taxis</td></tr>
+                            <tr><td>Cabify</td><td>Tarjeta, efectivo</td><td>Conecta también con taxis amarillos</td></tr>
+                            <tr><td>Picap</td><td>Efectivo</td><td>Mototaxis</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Costos aproximados desde Loma del Indio</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Destino</th><th>Taxi/Uber</th><th>Distancia</th></tr></thead>
+                        <tbody>
+                            <tr><td>Centro de Medellín</td><td>$12.000–18.000</td><td>~4–5 km</td></tr>
+                            <tr><td>El Poblado (Parque Lleras)</td><td>$15.000–22.000</td><td>~5–6 km</td></tr>
+                            <tr><td>C.C. San Diego</td><td>$8.000–12.000</td><td>~2–3 km</td></tr>
+                            <tr><td>Laureles</td><td>$20.000–28.000</td><td>~8–10 km</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="highlight">InDriver permite negociar precios y suele resultar más económico. El 78% de las transacciones en apps de transporte en Colombia se pagan en efectivo.</div>
+            </div>
+
+            <div class="card">
+                <h3>Tarifas y horarios</h3>
+                <p>• Metro/Tranvía (2025): $3.430 COP con Cívica · $3.900 ocasional<br>
+                   • Horario: Lun–Sáb 4:30am–11pm · Dom 5:00am–10pm<br>
+                   • Tarifa mínima de taxi (2025): $7.400 COP · Banderazo: $5.100 COP</p>
+                <h4>Apps útiles</h4>
+                <p>🗺️ Moovit (transporte público) · 💳 App Cívica (tarjeta Metro) · 🚗 Waze (tráfico en tiempo real)</p>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- ===== SECCIÓN COMER ===== -->
+        <!-- ============================================================= -->
+        <section id="comer" class="section">
+            <h2 class="section-title">🍽️ Dónde comer</h2>
+
+            <div class="card">
+                <h3>En Mall El Indio y alrededores</h3>
+                <h4>Rodizzio Las Palmas El Indio</h4>
+                <p>Churrascaria brasileña · Cra 38 Cl 26-279, Interior 103, Mall El Indio<br>
+                   Especialidad: 11–12 cortes de carne a la parrilla con barra de ensaladas ilimitada.</p>
+                <h4>Azabache Restaurante ⭐ 4.9/5</h4>
+                <p>Parrilla con música en vivo · Zona Las Palmas (a 0.47 millas de Mall El Indio)<br>
+                   Especialidad: Tomahawk steak, ambiente vibrante.</p>
+            </div>
+
+            <div class="card">
+                <h3>En La Asomadera</h3>
+                <h4>Balcón de la Asomadera</h4>
+                <p>Americana, Latina, Colombiana · Cra 38d N° 39c 06<br>
+                   Horario: 10:00 AM – 10:00 PM · Acepta solo efectivo.</p>
+            </div>
+
+            <div class="card">
+                <h3>En Buenos Aires (cerca del Tranvía)</h3>
+                <h4>Mercado del Tranvía ⭐ 4.3/5</h4>
+                <p>Mercado gastronómico con 21+ conceptos · Calle 49 # 34-29, Buenos Aires<br>
+                   Mexicano, Pizza, Peruano, Hamburguesas, Alitas · Junto a estación Buenos Aires.</p>
+                <h4>Floraterraza</h4>
+                <p>Restaurante con cocteles · Carrera 21 47-190.</p>
+                <h4>Bóreo</h4>
+                <p>Colombiano, buena relación calidad-precio · Calle 49 #28-16.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- ===== SECCIÓN SALUD ===== -->
+        <!-- ============================================================= -->
+        <section id="salud" class="section">
+            <h2 class="section-title">🏥 Servicios médicos</h2>
+
+            <div class="card">
+                <h3>Clínica Sagrado Corazón</h3>
+                <p><strong>Privado · alta complejidad</strong><br>
+                   📍 Calle 49 Nº 35-61, Barrio Buenos Aires<br>
+                   📞 (604) 215 10 00<br>
+                   Servicios: Urgencias 24h, UCI, cirugía, oncología, radiología.</p>
+            </div>
+
+            <div class="card">
+                <h3>Unidad Hospitalaria Buenos Aires – Metrosalud</h3>
+                <p><strong>Público</strong><br>
+                   📍 Calle 50 #31-39, Buenos Aires<br>
+                   📞 (604) 511 75 05 Ext. 4400<br>
+                   Servicios: Urgencias, consulta médica, vacunación, laboratorio, farmacia.</p>
+            </div>
+
+            <div class="card">
+                <h3>Centro Médico Buenos Aires</h3>
+                <p><strong>Privado</strong><br>
+                   📍 Calle 49 # 33-23, Buenos Aires<br>
+                   Servicios: Consulta general y especializada, laboratorio, tomografía, ecografías.</p>
+            </div>
+
+            <div class="card">
+                <h3>Farmacias cercanas</h3>
+                <div class="list-item"><span class="ico">💊</span><div><strong>Farmacia Pasteur</strong> · Avenida Ayacucho #89, Buenos Aires · Tel: (4) 4441900</div></div>
+                <div class="list-item"><span class="ico">🚚</span><div><strong>Farmatodo</strong> · Domicilio 24 horas · www.farmatodo.com.co</div></div>
+                <div class="list-item"><span class="ico">🏬</span><div><strong>Droguería Mall El Indio</strong> · Farmacia local dentro del centro comercial</div></div>
+                <div class="list-item"><span class="ico">➕</span><div><strong>Cruz Verde</strong> · Múltiples ubicaciones en Medellín</div></div>
+                <div class="list-item"><span class="ico">🚚</span><div><strong>Droguerías Cafam</strong> · Domicilio 24 horas disponible</div></div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <p>🌿 ¡Disfrute su estadía en Medellín, la ciudad de la eterna primavera! 🌿</p>
+            <p style="margin-top:8px;"><strong>Reserva San Diego 112</strong> · Loma del Indio</p>
+            <p style="margin-top:8px;">Información verificada con fuentes oficiales – Enero 2026</p>
+        </footer>
+
+    </div>
+
+    <!-- ===== BOTONES FLOTANTES ===== -->
+    <div class="floating-buttons">
+        <a href="tel:123" class="fab fab-emergency" title="Emergencias 123">🆘</a>
+        <!-- Anfitrión: Hassen -->
+        <a href="https://wa.me/573054255364" class="fab fab-whatsapp" title="WhatsApp Hassen" target="_blank" rel="noopener">💬</a>
+    </div>
+
+    <!-- ===== NAVEGACIÓN INFERIOR ===== -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-target="inicio"><span class="nav-ico">🏠</span>Inicio</button>
+        <button class="nav-btn" data-target="registro"><span class="nav-ico">📋</span>Registro</button>
+        <button class="nav-btn" data-target="moverse"><span class="nav-ico">🚌</span>Moverse</button>
+        <button class="nav-btn" data-target="comer"><span class="nav-ico">🍽️</span>Comer</button>
+        <button class="nav-btn" data-target="salud"><span class="nav-ico">🏥</span>Salud</button>
+    </nav>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== CONFIGURACIÓN ===== 
+        const CONFIG = {
+            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzLePRQsc9FBs8LpmSEp8jzohn2KTrEJ4157X0eY-W_MYRR7dXKTo8zm2uvfiApUgm5zA/exec',
+            ESTABLECIMIENTO: 'Reserva San Diego 112'
+        };
+
+        // ===== LÓGICA DE NAVEGACIÓN POR PESTAÑAS =====
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.target;
+                // Activar el botón seleccionado
+                navButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Mostrar solo la sección correspondiente
+                sections.forEach(sec => sec.classList.toggle('active', sec.id === target));
+                // Volver al inicio de la página al cambiar de sección
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // ===== LÓGICA DE ACORDEONES =====
+        document.querySelectorAll('[data-accordion]').forEach(acc => {
+            acc.querySelector('.accordion-header').addEventListener('click', () => {
+                acc.classList.toggle('active');
+            });
+        });
+
+        // ===== LÓGICA DE FECHAS =====
+        const today = new Date().toISOString().split('T')[0];
+        const checkinEl = document.getElementById('checkin');
+        const checkoutEl = document.getElementById('checkout');
+        checkinEl.setAttribute('min', today);
+        // Al elegir check-in, el check-out no puede ser anterior
+        checkinEl.addEventListener('change', function () {
+            checkoutEl.setAttribute('min', this.value);
+        });
+
+        // ===== LÓGICA DEL FORMULARIO DE REGISTRO =====
+        const form = document.getElementById('registration-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formStatus = document.getElementById('form-status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validación nativa de campos requeridos
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            // Validación: check-out posterior a check-in
+            const checkin = checkinEl.value;
+            const checkout = checkoutEl.value;
+            if (checkout <= checkin) {
+                formStatus.textContent = '❌ El check-out debe ser posterior al check-in.';
+                formStatus.className = 'form-status show error';
+                return;
+            }
+
+            // Estado de carga
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Enviando...';
+            formStatus.classList.remove('show');
+
+            // Construcción del objeto de datos (claves exactas del Apps Script)
+            const data = {
+                establecimiento: CONFIG.ESTABLECIMIENTO,
+                tipo_id: document.getElementById('tipo_id').value,
+                numero_id: document.getElementById('numero_id').value.trim(),
+                nombres: document.getElementById('nombres').value.trim(),
+                apellidos: document.getElementById('apellidos').value.trim(),
+                ciudad_residencia: document.getElementById('ciudad_residencia').value.trim(),
+                ciudad_procedencia: document.getElementById('ciudad_procedencia').value.trim(),
+                habitacion: document.getElementById('habitacion').value,
+                motivo_viaje: document.getElementById('motivo_viaje').value,
+                acompanantes: document.getElementById('acompanantes').value || '0',
+                tipo_acomodacion: document.getElementById('tipo_acomodacion').value,
+                checkin: checkin,
+                checkout: checkout,
+                valor_total: document.getElementById('valor_total').value
+            };
+
+            // Envío al Google Apps Script.
+            // NOTA: con mode 'no-cors' la respuesta es opaca (no se puede leer),
+            // por eso asumimos éxito si no se lanza ninguna excepción.
+            try {
+                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                formStatus.textContent = '✅ ¡Registro enviado! Bienvenido a Reserva San Diego 112.';
+                formStatus.className = 'form-status show success';
+                form.reset();
+                checkinEl.setAttribute('min', today);
+            } catch (error) {
+                formStatus.textContent = '❌ Error al enviar. Por favor intente nuevamente.';
+                formStatus.className = 'form-status show error';
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = 'Enviar registro';
+            }
+        });
+    </script>
+</body>
+</html>
