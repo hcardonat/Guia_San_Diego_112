@@ -721,22 +721,27 @@
                 valor_total: document.getElementById('valor_total').value
             };
 
-            // Envío al Google Apps Script.
-            // NOTA: con mode 'no-cors' la respuesta es opaca (no se puede leer),
-            // por eso asumimos éxito si no se lanza ninguna excepción.
+            // ===== ENVÍO AL GOOGLE APPS SCRIPT (CORS habilitado) =====
+            // El script ya devuelve cabeceras Access-Control-Allow-Origin: *
+            // por eso ahora podemos leer la respuesta real y confirmar el guardado.
             try {
-                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                formStatus.textContent = '✅ ¡Registro enviado! Bienvenido a Reserva San Diego 112.';
-                formStatus.className = 'form-status show success';
-                form.reset();
-                checkinEl.setAttribute('min', today);
+                const result = await response.json();
+                if (result.status === 'success') {
+                    formStatus.textContent = '✅ ¡Registro guardado correctamente! Bienvenido a Reserva San Diego 112.';
+                    formStatus.className = 'form-status show success';
+                    form.reset();
+                    checkinEl.setAttribute('min', today);
+                } else {
+                    formStatus.textContent = '❌ El servidor reportó un error: ' + (result.message || 'desconocido');
+                    formStatus.className = 'form-status show error';
+                }
             } catch (error) {
-                formStatus.textContent = '❌ Error al enviar. Por favor intente nuevamente.';
+                formStatus.textContent = '❌ No se pudo conectar con el servidor. Verifique su conexión e intente nuevamente.';
                 formStatus.className = 'form-status show error';
             } finally {
                 submitBtn.classList.remove('loading');
