@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Guía digital para huéspedes de Reserva San Diego 112, Loma del Indio, Medellín">
+    <meta name="description" id="meta-description" content="Guía digital para huéspedes de Reserva San Diego 112, Loma del Indio, Medellín">
     <meta name="theme-color" content="#2d6a4f">
-    <title>🏙️ Reserva San Diego 112 · Guía del Huésped</title>
+    <title id="page-title">🏙️ Reserva San Diego 112 · Guía del Huésped</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏙️</text></svg>">
- 
+
     <style>
         /* ===== VARIABLES DE COLOR Y DISEÑO ===== */
         :root {
@@ -24,11 +24,11 @@
             --shadow:        0 2px 8px rgba(0,0,0,0.08);
             --radius:        14px;
         }
- 
+
         /* ===== RESET BÁSICO ===== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
- 
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 16px;
@@ -38,7 +38,7 @@
             padding-bottom: 72px; /* espacio para la nav inferior fija */
             min-height: 100vh;
         }
- 
+
         /* ===== HEADER STICKY ===== */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -65,19 +65,45 @@
             padding: 3px 12px;
             font-size: 0.78rem;
         }
- 
+        /* ===== SELECTOR DE IDIOMA ===== */
+        .lang-switch {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            background: rgba(255,255,255,0.18);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .lang-btn {
+            border: none;
+            background: none;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            cursor: pointer;
+            opacity: 0.75;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .lang-btn.active {
+            background: rgba(255,255,255,0.30);
+            opacity: 1;
+        }
+
         /* ===== CONTENEDOR ===== */
         .container {
             max-width: 620px;
             margin: 0 auto;
             padding: 16px;
         }
- 
+
         /* ===== SECCIONES (TABS) ===== */
         .section { display: none; }
         .section.active { display: block; animation: fade 0.25s ease; }
         @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
- 
+
         .section-title {
             font-size: 1.15rem;
             color: var(--primary-dark);
@@ -86,7 +112,7 @@
             align-items: center;
             gap: 8px;
         }
- 
+
         /* ===== CARDS ===== */
         .card {
             background: var(--card);
@@ -107,14 +133,14 @@
             color: var(--text);
             margin-top: 8px;
         }
- 
+
         /* ===== TABLAS ===== */
         .table-wrap { overflow-x: auto; margin: 6px 0; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
         th { background: #eef4f0; color: var(--primary-dark); font-weight: 600; }
         td { color: var(--text-light); }
- 
+
         /* ===== ACORDEONES ===== */
         .accordion {
             background: var(--card);
@@ -142,7 +168,7 @@
             padding: 0 16px;
         }
         .accordion.active .accordion-body { max-height: 2000px; padding: 0 16px 16px; }
- 
+
         /* ===== FORMULARIO ===== */
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .form-group { display: flex; flex-direction: column; }
@@ -159,7 +185,7 @@
         }
         .form-group input:focus,
         .form-group select:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
- 
+
         .submit-btn {
             width: 100%;
             background: var(--primary);
@@ -175,7 +201,7 @@
         }
         .submit-btn:hover { background: var(--primary-dark); }
         .submit-btn.loading { opacity: 0.7; pointer-events: none; }
- 
+
         .form-status {
             display: none;
             margin-top: 12px;
@@ -187,7 +213,7 @@
         .form-status.show { display: block; }
         .form-status.success { background: #e7f3ec; color: var(--success); }
         .form-status.error { background: #fbe9e7; color: var(--error); }
- 
+
         /* ===== LISTA DE FARMACIAS / APPS ===== */
         .list-item {
             display: flex;
@@ -199,7 +225,7 @@
         }
         .list-item:last-child { border-bottom: none; }
         .list-item .ico { font-size: 1.2rem; }
- 
+
         /* ===== NAVEGACIÓN INFERIOR ===== */
         .bottom-nav {
             position: fixed;
@@ -226,7 +252,7 @@
         }
         .nav-btn .nav-ico { display: block; font-size: 1.25rem; margin-bottom: 2px; }
         .nav-btn.active { color: var(--primary); border-top-color: var(--primary); }
- 
+
         /* ===== BOTONES FLOTANTES ===== */
         .floating-buttons {
             position: fixed;
@@ -250,7 +276,7 @@
         }
         .fab-emergency { background: var(--error); }
         .fab-whatsapp { background: #25d366; }
- 
+
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
@@ -259,7 +285,7 @@
             font-size: 0.82rem;
         }
         .footer strong { color: var(--primary-dark); }
- 
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
             .form-row { grid-template-columns: 1fr; }
@@ -268,82 +294,86 @@
     </style>
 </head>
 <body>
- 
+
     <!-- ===== HEADER ===== -->
     <header class="header">
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+            <button type="button" class="lang-btn active" data-lang="es">ES</button>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
         <h1>🏙️ Reserva San Diego 112</h1>
-        <div class="subtitle">Loma del Indio · Medellín, Colombia</div>
+        <div class="subtitle" data-i18n="header.subtitle">Loma del Indio · Medellín, Colombia</div>
         <div class="chips">
-            <span class="chip">Estrato 4–5</span>
-            <span class="chip">1.550–1.650 msnm</span>
+            <span class="chip" data-i18n="header.chip1">Estrato 4–5</span>
+            <span class="chip" data-i18n="header.chip2">1.550–1.650 msnm</span>
             <span class="chip">21–24 °C</span>
         </div>
     </header>
- 
+
     <div class="container">
- 
+
         <!-- ============================================================= -->
         <!-- ===== SECCIÓN INICIO ===== -->
         <!-- ============================================================= -->
         <section id="inicio" class="section active">
-            <h2 class="section-title">👋 Bienvenido</h2>
- 
+            <h2 class="section-title" data-i18n="inicio.title">👋 Bienvenido</h2>
+
             <div class="card">
-                <p>La Reserva de San Diego (Carrera 28 No. 29-85) se encuentra en uno de los sectores más estratégicos de Medellín: las laderas orientales con acceso directo al Túnel de Oriente, conexión al Tranvía de Ayacucho y vistas panorámicas del Valle de Aburrá.</p>
-                <p>Esta zona residencial de estrato 4–5 combina la tranquilidad de un barrio tradicional con la modernidad de unidades cerradas y centros comerciales cercanos. El sector está entre 1.550 y 1.650 metros sobre el nivel del mar, con clima primaveral todo el año (21–24 °C).</p>
-                <div class="highlight">El sector limita con el Cerro La Asomadera, un área natural protegida de 26,63 hectáreas a pocos minutos a pie.</div>
+                <p data-i18n="inicio.p1">La Reserva de San Diego (Carrera 28 No. 29-85) se encuentra en uno de los sectores más estratégicos de Medellín: las laderas orientales con acceso directo al Túnel de Oriente, conexión al Tranvía de Ayacucho y vistas panorámicas del Valle de Aburrá.</p>
+                <p data-i18n="inicio.p2">Esta zona residencial de estrato 4–5 combina la tranquilidad de un barrio tradicional con la modernidad de unidades cerradas y centros comerciales cercanos. El sector está entre 1.550 y 1.650 metros sobre el nivel del mar, con clima primaveral todo el año (21–24 °C).</p>
+                <div class="highlight" data-i18n="inicio.highlight">El sector limita con el Cerro La Asomadera, un área natural protegida de 26,63 hectáreas a pocos minutos a pie.</div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: CÓMO LLEGAR DESDE EL AEROPUERTO ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>✈️ Cómo llegar desde el aeropuerto</span>
+                    <span data-i18n="acc.airport.h">✈️ Cómo llegar desde el aeropuerto</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>El Aeropuerto Internacional José María Córdova (MDE) está a unos 29–35 km del sector. La ruta más rápida es por el Túnel de Oriente (25–35 min); la vía escénica por Las Palmas toma 40–50 min.</p>
+                    <p data-i18n="acc.airport.p">El Aeropuerto Internacional José María Córdova (MDE) está a unos 29–35 km del sector. La ruta más rápida es por el Túnel de Oriente (25–35 min); la vía escénica por Las Palmas toma 40–50 min.</p>
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>Opción</th><th>Costo aprox.</th><th>Notas</th></tr>
+                                <tr><th data-i18n="acc.airport.th1">Opción</th><th data-i18n="acc.airport.th2">Costo aprox.</th><th data-i18n="acc.airport.th3">Notas</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Taxi amarillo oficial</td><td>$118.000–120.000 COP</td><td>Tarifa fija con peajes incluidos, 24/7</td></tr>
-                                <tr><td>Uber / DiDi / InDriver</td><td>$80.000–110.000 COP</td><td>Precio dinámico según demanda</td></tr>
-                                <tr><td>Combuses (bus San Diego)</td><td>$9.500 COP</td><td>Sale del C.C. San Diego cada 15 min</td></tr>
-                                <tr><td>Taxi compartido blanco</td><td>~$30.000 COP por persona</td><td>Salen cuando se llenan desde zona San Diego</td></tr>
+                                <tr><td data-i18n="acc.airport.r1c1">Taxi amarillo oficial</td><td>$118.000–120.000 COP</td><td data-i18n="acc.airport.r1c3">Tarifa fija con peajes incluidos, 24/7</td></tr>
+                                <tr><td>Uber / DiDi / InDriver</td><td>$80.000–110.000 COP</td><td data-i18n="acc.airport.r2c3">Precio dinámico según demanda</td></tr>
+                                <tr><td data-i18n="acc.airport.r3c1">Combuses (bus San Diego)</td><td>$9.500 COP</td><td data-i18n="acc.airport.r3c3">Sale del C.C. San Diego cada 15 min</td></tr>
+                                <tr><td data-i18n="acc.airport.r4c1">Taxi compartido blanco</td><td>~$30.000 COP por persona</td><td data-i18n="acc.airport.r4c3">Salen cuando se llenan desde zona San Diego</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="highlight"><strong>Opción económica:</strong> bus Combuses hasta San Diego ($9.500) + taxi/Uber hasta Loma del Indio (~$12.000). Total aproximado: <strong>$22.000 COP</strong>.</div>
+                    <div class="highlight" data-i18n="acc.airport.hl"><strong>Opción económica:</strong> bus Combuses hasta San Diego ($9.500) + taxi/Uber hasta Loma del Indio (~$12.000). Total aproximado: <strong>$22.000 COP</strong>.</div>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: METRO Y TRANVÍA ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🚉 Metro y Tranvía cercanos</span>
+                    <span data-i18n="acc.metro.h">🚉 Metro y Tranvía cercanos</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>El sector tiene excelente conectividad gracias al Tranvía de Ayacucho (Línea T), inaugurado en 2016.</p>
-                    <h4>Estaciones más cercanas</h4>
-                    <p>• <strong>Bicentenario</strong> – la más cercana (~15 min caminando)<br>
+                    <p data-i18n="acc.metro.p">El sector tiene excelente conectividad gracias al Tranvía de Ayacucho (Línea T), inaugurado en 2016.</p>
+                    <h4 data-i18n="acc.metro.h4">Estaciones más cercanas</h4>
+                    <p data-i18n="acc.metro.p2">• <strong>Bicentenario</strong> – la más cercana (~15 min caminando)<br>
                        • <strong>Buenos Aires</strong> – cerca de Carrera 30 (~10–15 min)<br>
                        • <strong>Miraflores</strong> – conecta con Metrocable Línea M (~20 min)</p>
-                    <div class="highlight">Tarifa Metro/Tranvía (2025): <strong>$3.430 COP</strong> con tarjeta Cívica · $3.900 COP tarifa ocasional.</div>
+                    <div class="highlight" data-i18n="acc.metro.hl">Tarifa Metro/Tranvía (2025): <strong>$3.430 COP</strong> con tarjeta Cívica · $3.900 COP tarifa ocasional.</div>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: CERRO LA ASOMADERA ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🌳 Cerro La Asomadera</span>
+                    <span data-i18n="acc.asomadera.h">🌳 Cerro La Asomadera</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>Área natural protegida a pocos minutos caminando. Horario: 5:30 AM – 6:00 PM. Acceso: buses 091 o 13.</p>
-                    <p>• 2,6+ km de senderos marcados<br>
+                    <p data-i18n="acc.asomadera.p">Área natural protegida a pocos minutos caminando. Horario: 5:30 AM – 6:00 PM. Acceso: buses 091 o 13.</p>
+                    <p data-i18n="acc.asomadera.p2">• 2,6+ km de senderos marcados<br>
                        • Piscina gratuita INDER (Mar–Vie 8am–5pm, Sáb 8am–3pm, Dom 8am–4pm)<br>
                        • Mirador natural con vista 360° del Valle de Aburrá<br>
                        • 152+ especies de árboles nativos y 42+ especies de aves<br>
@@ -351,64 +381,64 @@
                        • Zona de camping y juegos infantiles</p>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: CENTROS COMERCIALES ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🛒 Centros comerciales y supermercados</span>
+                    <span data-i18n="acc.malls.h">🛒 Centros comerciales y supermercados</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>Mall</th><th>Dirección</th><th>Destacados</th></tr>
+                                <tr><th data-i18n="acc.malls.th1">Mall</th><th data-i18n="acc.malls.th2">Dirección</th><th data-i18n="acc.malls.th3">Destacados</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Mall El Indio</td><td>Cra 38 # 26-279</td><td>D1, Fruver, farmacia, comidas rápidas. 7am–8pm</td></tr>
-                                <tr><td>Mall Loma del Indio</td><td>Cra 37a # 29-59</td><td>L–S 8am–8pm · Dom 9am–6pm</td></tr>
+                                <tr><td>Mall El Indio</td><td>Cra 38 # 26-279</td><td data-i18n="acc.malls.r1c3">D1, Fruver, farmacia, comidas rápidas. 7am–8pm</td></tr>
+                                <tr><td>Mall Loma del Indio</td><td>Cra 37a # 29-59</td><td data-i18n="acc.malls.r2c3">L–S 8am–8pm · Dom 9am–6pm</td></tr>
                                 <tr><td>Mall Palms Avenue</td><td>Cl 18 # 35-69, Vía Las Palmas</td><td>Carulla, restaurantes, Café Oma</td></tr>
                                 <tr><td>Palmagrande Mall</td><td>Cra 38 # 18-101, Vía Las Palmas</td><td>Euro Supermercado, food court</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <h4>Supermercados</h4>
+                    <h4 data-i18n="acc.malls.h4">Supermercados</h4>
                     <p>D1 (Mall El Indio) · Carulla Las Palmas (premium) · Euro Supermercado (Palmagrande) · Fruver (Mall El Indio)</p>
                     <!-- ===== DATO NUEVO: minimercado interno de la unidad (Excel: "Tiendas Cercanas") ===== -->
-                    <div class="highlight">🏬 <strong>Minimercado dentro de la Unidad Residencial</strong> — disponible sin salir del conjunto, además de los supermercados externos listados arriba.</div>
+                    <div class="highlight" data-i18n="acc.malls.hl">🏬 <strong>Minimercado dentro de la Unidad Residencial</strong> — disponible sin salir del conjunto, además de los supermercados externos listados arriba.</div>
                 </div>
             </div>
- 
+
             <!-- ============================================================= -->
             <!-- ===== BLOQUE NUEVO: INFORMACIÓN OPERATIVA DEL APARTAMENTO ===== -->
             <!-- Fuente: Reserva_San_Diego_112.xlsx, hoja AIRBNB -->
             <!-- ============================================================= -->
- 
+
             <!-- ===== ACORDEÓN: ACCESO Y LLAVES ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🔑 Acceso y llaves</span>
+                    <span data-i18n="acc.keys.h">🔑 Acceso y llaves</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <h4>Portería de la unidad</h4>
-                    <p>Portería 24 horas. El huésped principal debe autorizar previamente a sí mismo y a sus acompañantes para poder ingresar.</p>
-                    <h4>Apartamento (Piso 1)</h4>
-                    <p>Acceso autónomo con cerradura digital — no requiere recoger llaves físicas para entrar al apartamento.</p>
+                    <h4 data-i18n="acc.keys.h4a">Portería de la unidad</h4>
+                    <p data-i18n="acc.keys.pa">Portería 24 horas. El huésped principal debe autorizar previamente a sí mismo y a sus acompañantes para poder ingresar.</p>
+                    <h4 data-i18n="acc.keys.h4b">Apartamento (Piso 1)</h4>
+                    <p data-i18n="acc.keys.pb">Acceso autónomo con cerradura digital — no requiere recoger llaves físicas para entrar al apartamento.</p>
                     <!-- El código de la cerradura NO se publica en esta guía por decisión operativa del
                          anfitrión: se entrega directamente al huésped por WhatsApp al momento del ingreso,
                          no de forma anticipada ni escrita en la página. Esto es intencional, no un dato
                          faltante. -->
-                    <div class="highlight">🔐 El código de la cerradura digital se lo enviará su anfitrión por WhatsApp al momento de su llegada. <a href="https://wa.me/573054255364" target="_blank" rel="noopener">Escribir a Hassen</a></div>
-                    <h4>Balcón / terraza</h4>
-                    <p>La reja de acceso a la terraza se abre con llave física, entregada junto con la información de check-in.</p>
+                    <div class="highlight" data-i18n="acc.keys.hl">🔐 El código de la cerradura digital se lo enviará su anfitrión por WhatsApp al momento de su llegada. <a href="https://wa.me/573054255364" target="_blank" rel="noopener">Escribir a Hassen</a></div>
+                    <h4 data-i18n="acc.keys.h4c">Balcón / terraza</h4>
+                    <p data-i18n="acc.keys.pc">La reja de acceso a la terraza se abre con llave física, entregada junto con la información de check-in.</p>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: WIFI ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>📶 Wifi</span>
+                    <span data-i18n="acc.wifi.h">📶 Wifi</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
@@ -416,43 +446,43 @@
                          a cada huésped tras reservar. Por eso la contraseña de wifi se muestra sin
                          restricciones adicionales. Si en el futuro la URL llega a indexarse o compartirse
                          fuera de ese contexto, revisar esta decisión. -->
-                    <div class="highlight">
+                    <div class="highlight" data-i18n="acc.wifi.hl">
                         📶 Red: <strong>PaulaCruz</strong><br>
                         Contraseña: <strong>3054255364</strong>
                     </div>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: HABITACIONES ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🛏️ Habitaciones</span>
+                    <span data-i18n="acc.rooms.h">🛏️ Habitaciones</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <h4>Habitación Principal — capacidad 2 personas</h4>
-                    <p>• 1 cama Queen + 2 mesas de noche<br>
+                    <h4 data-i18n="acc.rooms.h4a">Habitación Principal — capacidad 2 personas</h4>
+                    <p data-i18n="acc.rooms.pa">• 1 cama Queen + 2 mesas de noche<br>
                        • 1 Smart TV<br>
                        • 1 closet + 1 mueble de almacenamiento</p>
-                    <h4>Habitación de Huéspedes — capacidad 3 personas</h4>
-                    <p>• 1 cama doble + 1 cama nicho<br>
+                    <h4 data-i18n="acc.rooms.h4b">Habitación de Huéspedes — capacidad 3 personas</h4>
+                    <p data-i18n="acc.rooms.pb">• 1 cama doble + 1 cama nicho<br>
                        • 1 closet<br>
                        • 1 escritorio + silla</p>
                     <!-- Capacidad confirmada por el anfitrión: 5 personas en total (2 + 3 entre ambas
                          habitaciones). El campo "Capacidad Máxima: 3 Personas" del Excel original quedó
                          obsoleto frente a esta confirmación y no se refleja en el HTML. -->
-                    <div class="highlight">👥 Capacidad total del apartamento: <strong>5 personas</strong> (2 en Habitación Principal + 3 en Habitación de Huéspedes).</div>
+                    <div class="highlight" data-i18n="acc.rooms.hl">👥 Capacidad total del apartamento: <strong>5 personas</strong> (2 en Habitación Principal + 3 en Habitación de Huéspedes).</div>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: COCINA ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🍳 Cocina</span>
+                    <span data-i18n="acc.kitchen.h">🍳 Cocina</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>• Nevera<br>
+                    <p data-i18n="acc.kitchen.p">• Nevera<br>
                        • Estufa a gas<br>
                        • Horno microondas<br>
                        • Cafetera<br>
@@ -461,319 +491,319 @@
                        • Vajilla para 4 personas + copas de vino</p>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: COMODIDADES DEL EDIFICIO ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>🏊 Comodidades del edificio</span>
+                    <span data-i18n="acc.amen.h">🏊 Comodidades del edificio</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
                     <!-- Estas son comodidades PRIVADAS de la Unidad Residencial Reserva de San Diego,
                          distintas de la piscina pública del Cerro La Asomadera (documentada en el
                          acordeón "Cerro La Asomadera" más arriba, que es gratuita y administrada por INDER). -->
-                    <h4>Piscina del edificio</h4>
-                    <p>Martes a domingo, 9:00 AM – 7:00 PM. Se requiere gorro de baño para el ingreso.</p>
-                    <h4>Gimnasio del edificio</h4>
-                    <p>Lunes a domingo, 6:00 AM – 10:00 PM.</p>
-                    <div class="highlight">📌 Estas son las instalaciones privadas de la unidad residencial — no confundir con la piscina pública gratuita del Cerro La Asomadera (sección Inicio), que tiene horarios y reglas distintas.</div>
+                    <h4 data-i18n="acc.amen.h4a">Piscina del edificio</h4>
+                    <p data-i18n="acc.amen.pa">Martes a domingo, 9:00 AM – 7:00 PM. Se requiere gorro de baño para el ingreso.</p>
+                    <h4 data-i18n="acc.amen.h4b">Gimnasio del edificio</h4>
+                    <p data-i18n="acc.amen.pb">Lunes a domingo, 6:00 AM – 10:00 PM.</p>
+                    <div class="highlight" data-i18n="acc.amen.hl">📌 Estas son las instalaciones privadas de la unidad residencial — no confundir con la piscina pública gratuita del Cerro La Asomadera (sección Inicio), que tiene horarios y reglas distintas.</div>
                 </div>
             </div>
- 
+
             <!-- ===== ACORDEÓN: NORMAS DE LA CASA ===== -->
             <div class="accordion" data-accordion>
                 <div class="accordion-header">
-                    <span>📋 Normas de la casa</span>
+                    <span data-i18n="acc.rules.h">📋 Normas de la casa</span>
                     <span class="arrow">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>• Horario de silencio: 11:00 PM – 7:00 AM<br>
+                    <p data-i18n="acc.rules.p">• Horario de silencio: 11:00 PM – 7:00 AM<br>
                        • Identificarse en portería al entrar por primera vez<br>
                        • Registrar visitas en portería<br>
                        • Basuras únicamente en los contenedores designados</p>
                 </div>
             </div>
         </section>
- 
- 
+
+
         <!-- ============================================================= -->
         <!-- ===== SECCIÓN REGISTRO DE HUÉSPEDES ===== -->
         <!-- ============================================================= -->
         <section id="registro" class="section">
-            <h2 class="section-title">📋 Registro de huéspedes</h2>
+            <h2 class="section-title" data-i18n="reg.title">📋 Registro de huéspedes</h2>
             <div class="card">
-                <p>Complete este formulario de registro para todos los huéspedes mayores de edad. Los campos marcados con <strong>*</strong> son obligatorios.</p>
- 
+                <p data-i18n="reg.intro">Complete este formulario de registro para todos los huéspedes mayores de edad. Los campos marcados con <strong>*</strong> son obligatorios.</p>
+
                 <form id="registration-form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="tipo_id">Tipo documento *</label>
+                            <label for="tipo_id" data-i18n="reg.lbl.tipo_id">Tipo documento *</label>
                             <select id="tipo_id" required>
-                                <option value="">Seleccione...</option>
-                                <option value="CC">Cédula Ciudadanía</option>
-                                <option value="CE">Cédula Extranjería</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                                <option value="TI">Tarjeta Identidad</option>
+                                <option value="" data-i18n="reg.opt.select">Seleccione...</option>
+                                <option value="CC" data-i18n="reg.opt.cc">Cédula Ciudadanía</option>
+                                <option value="CE" data-i18n="reg.opt.ce">Cédula Extranjería</option>
+                                <option value="Pasaporte" data-i18n="reg.opt.pasaporte">Pasaporte</option>
+                                <option value="TI" data-i18n="reg.opt.ti">Tarjeta Identidad</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="numero_id">Número documento *</label>
+                            <label for="numero_id" data-i18n="reg.lbl.numero_id">Número documento *</label>
                             <input type="text" id="numero_id" required>
                         </div>
                     </div>
- 
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="nombres">Nombres *</label>
+                            <label for="nombres" data-i18n="reg.lbl.nombres">Nombres *</label>
                             <input type="text" id="nombres" required>
                         </div>
                         <div class="form-group">
-                            <label for="apellidos">Apellidos *</label>
+                            <label for="apellidos" data-i18n="reg.lbl.apellidos">Apellidos *</label>
                             <input type="text" id="apellidos" required>
                         </div>
                     </div>
- 
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="ciudad_residencia">Ciudad residencia *</label>
+                            <label for="ciudad_residencia" data-i18n="reg.lbl.ciudad_residencia">Ciudad residencia *</label>
                             <input type="text" id="ciudad_residencia" required>
                         </div>
                         <div class="form-group">
-                            <label for="ciudad_procedencia">Ciudad procedencia *</label>
+                            <label for="ciudad_procedencia" data-i18n="reg.lbl.ciudad_procedencia">Ciudad procedencia *</label>
                             <input type="text" id="ciudad_procedencia" required>
                         </div>
                     </div>
- 
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="habitacion">Habitación *</label>
+                            <label for="habitacion" data-i18n="reg.lbl.habitacion">Habitación *</label>
                             <select id="habitacion" required>
-                                <option value="">Seleccione...</option>
-                                <option value="Principal">Principal</option>
-                                <option value="Secundaria">Secundaria</option>
-                                <option value="Completo">Apto. Completo</option>
+                                <option value="" data-i18n="reg.opt.select">Seleccione...</option>
+                                <option value="Principal" data-i18n="reg.opt.principal">Principal</option>
+                                <option value="Secundaria" data-i18n="reg.opt.secundaria">Secundaria</option>
+                                <option value="Completo" data-i18n="reg.opt.completo">Apto. Completo</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="acompanantes">Acompañantes</label>
+                            <label for="acompanantes" data-i18n="reg.lbl.acompanantes">Acompañantes</label>
                             <input type="number" id="acompanantes" min="0" max="10" value="0">
                         </div>
                     </div>
- 
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="motivo_viaje">Motivo viaje *</label>
+                            <label for="motivo_viaje" data-i18n="reg.lbl.motivo_viaje">Motivo viaje *</label>
                             <select id="motivo_viaje" required>
-                                <option value="">Seleccione...</option>
-                                <option value="Turismo">Turismo</option>
-                                <option value="Negocios">Negocios</option>
-                                <option value="Estudios">Estudios</option>
-                                <option value="Salud">Salud</option>
-                                <option value="Familiar">Familiar</option>
+                                <option value="" data-i18n="reg.opt.select">Seleccione...</option>
+                                <option value="Turismo" data-i18n="reg.opt.turismo">Turismo</option>
+                                <option value="Negocios" data-i18n="reg.opt.negocios">Negocios</option>
+                                <option value="Estudios" data-i18n="reg.opt.estudios">Estudios</option>
+                                <option value="Salud" data-i18n="reg.opt.salud">Salud</option>
+                                <option value="Familiar" data-i18n="reg.opt.familiar">Familiar</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="tipo_acomodacion">Acomodación *</label>
+                            <label for="tipo_acomodacion" data-i18n="reg.lbl.tipo_acomodacion">Acomodación *</label>
                             <select id="tipo_acomodacion" required>
-                                <option value="">Seleccione...</option>
-                                <option value="Individual">Individual</option>
-                                <option value="Doble">Doble</option>
-                                <option value="Triple">Triple</option>
-                                <option value="Familiar">Familiar</option>
+                                <option value="" data-i18n="reg.opt.select">Seleccione...</option>
+                                <option value="Individual" data-i18n="reg.opt.individual">Individual</option>
+                                <option value="Doble" data-i18n="reg.opt.doble">Doble</option>
+                                <option value="Triple" data-i18n="reg.opt.triple">Triple</option>
+                                <option value="Familiar" data-i18n="reg.opt.familiar">Familiar</option>
                             </select>
                         </div>
                     </div>
- 
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="checkin">Check-in *</label>
+                            <label for="checkin" data-i18n="reg.lbl.checkin">Check-in *</label>
                             <input type="date" id="checkin" required>
                         </div>
                         <div class="form-group">
-                            <label for="checkout">Check-out *</label>
+                            <label for="checkout" data-i18n="reg.lbl.checkout">Check-out *</label>
                             <input type="date" id="checkout" required>
                         </div>
                     </div>
- 
+
                     <div class="form-group full" style="margin-bottom:14px;">
-                        <label for="valor_total">Valor total (COP) *</label>
-                        <input type="number" id="valor_total" min="0" step="1000" placeholder="Ej: 250000" required>
+                        <label for="valor_total" data-i18n="reg.lbl.valor_total">Valor total (COP) *</label>
+                        <input type="number" id="valor_total" min="0" step="1000" placeholder="Ej: 250000" data-i18n-ph="reg.ph.valor_total" required>
                     </div>
- 
-                    <button type="submit" class="submit-btn" id="submit-btn">Enviar registro</button>
+
+                    <button type="submit" class="submit-btn" id="submit-btn" data-i18n="reg.btn.submit">Enviar registro</button>
                     <div id="form-status" class="form-status"></div>
                 </form>
             </div>
- 
+
             <!-- ===== TARJETA NUEVA: CHECKLIST DE CHECK-OUT ===== -->
             <div class="card">
-                <h3>✅ Antes de salir, verifique</h3>
-                <div class="list-item"><span class="ico">🍽️</span><div>Lavar la vajilla e implementos de cocina</div></div>
-                <div class="list-item"><span class="ico">🗑️</span><div>Botar la basura en los contenedores</div></div>
-                <div class="list-item"><span class="ico">❄️</span><div>Apagar A/C y ventiladores</div></div>
-                <div class="list-item"><span class="ico">💡</span><div>Apagar las luces</div></div>
-                <div class="list-item"><span class="ico">🪟</span><div>Cerrar ventanas</div></div>
-                <div class="list-item"><span class="ico">🔧</span><div>Notificar daños o reparaciones pendientes</div></div>
-                <div class="list-item"><span class="ico">💬</span><div>Enviar mensaje de salida a su anfitrión</div></div>
+                <h3 data-i18n="reg.checkout.h">✅ Antes de salir, verifique</h3>
+                <div class="list-item"><span class="ico">🍽️</span><div data-i18n="reg.checkout.i1">Lavar la vajilla e implementos de cocina</div></div>
+                <div class="list-item"><span class="ico">🗑️</span><div data-i18n="reg.checkout.i2">Botar la basura en los contenedores</div></div>
+                <div class="list-item"><span class="ico">❄️</span><div data-i18n="reg.checkout.i3">Apagar A/C y ventiladores</div></div>
+                <div class="list-item"><span class="ico">💡</span><div data-i18n="reg.checkout.i4">Apagar las luces</div></div>
+                <div class="list-item"><span class="ico">🪟</span><div data-i18n="reg.checkout.i5">Cerrar ventanas</div></div>
+                <div class="list-item"><span class="ico">🔧</span><div data-i18n="reg.checkout.i6">Notificar daños o reparaciones pendientes</div></div>
+                <div class="list-item"><span class="ico">💬</span><div data-i18n="reg.checkout.i7">Enviar mensaje de salida a su anfitrión</div></div>
             </div>
         </section>
- 
+
         <!-- ============================================================= -->
         <!-- ===== SECCIÓN MOVERSE ===== -->
         <!-- ============================================================= -->
         <section id="moverse" class="section">
-            <h2 class="section-title">🚌 Moverse por la ciudad</h2>
- 
+            <h2 class="section-title" data-i18n="mov.title">🚌 Moverse por la ciudad</h2>
+
             <div class="card">
-                <h3>Apps de transporte verificadas</h3>
+                <h3 data-i18n="mov.apps.h">Apps de transporte verificadas</h3>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>App</th><th>Pago</th><th>Notas</th></tr></thead>
+                        <thead><tr><th data-i18n="mov.apps.th1">App</th><th data-i18n="mov.apps.th2">Pago</th><th data-i18n="mov.apps.th3">Notas</th></tr></thead>
                         <tbody>
-                            <tr><td>Uber</td><td>Tarjeta, efectivo</td><td>Muy usado; puede requerir sentarse adelante</td></tr>
-                            <tr><td>InDriver</td><td>Efectivo preferido</td><td>Negociación de precio, muy popular</td></tr>
-                            <tr><td>DiDi</td><td>Tarjeta, efectivo</td><td>Precios competitivos</td></tr>
-                            <tr><td>Beat</td><td>Tarjeta, efectivo</td><td>25–30% más económico que taxis</td></tr>
-                            <tr><td>Cabify</td><td>Tarjeta, efectivo</td><td>Conecta también con taxis amarillos</td></tr>
-                            <tr><td>Picap</td><td>Efectivo</td><td>Mototaxis</td></tr>
+                            <tr><td>Uber</td><td data-i18n="mov.apps.r1c2">Tarjeta, efectivo</td><td data-i18n="mov.apps.r1c3">Muy usado; puede requerir sentarse adelante</td></tr>
+                            <tr><td>InDriver</td><td data-i18n="mov.apps.r2c2">Efectivo preferido</td><td data-i18n="mov.apps.r2c3">Negociación de precio, muy popular</td></tr>
+                            <tr><td>DiDi</td><td data-i18n="mov.apps.r3c2">Tarjeta, efectivo</td><td data-i18n="mov.apps.r3c3">Precios competitivos</td></tr>
+                            <tr><td>Beat</td><td data-i18n="mov.apps.r4c2">Tarjeta, efectivo</td><td data-i18n="mov.apps.r4c3">25–30% más económico que taxis</td></tr>
+                            <tr><td>Cabify</td><td data-i18n="mov.apps.r5c2">Tarjeta, efectivo</td><td data-i18n="mov.apps.r5c3">Conecta también con taxis amarillos</td></tr>
+                            <tr><td>Picap</td><td data-i18n="mov.apps.r6c2">Efectivo</td><td data-i18n="mov.apps.r6c3">Mototaxis</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
- 
+
             <div class="card">
-                <h3>Costos aproximados desde Loma del Indio</h3>
+                <h3 data-i18n="mov.cost.h">Costos aproximados desde Loma del Indio</h3>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Destino</th><th>Taxi/Uber</th><th>Distancia</th></tr></thead>
+                        <thead><tr><th data-i18n="mov.cost.th1">Destino</th><th data-i18n="mov.cost.th2">Taxi/Uber</th><th data-i18n="mov.cost.th3">Distancia</th></tr></thead>
                         <tbody>
-                            <tr><td>Centro de Medellín</td><td>$12.000–18.000</td><td>~4–5 km</td></tr>
+                            <tr><td data-i18n="mov.cost.r1c1">Centro de Medellín</td><td>$12.000–18.000</td><td>~4–5 km</td></tr>
                             <tr><td>El Poblado (Parque Lleras)</td><td>$15.000–22.000</td><td>~5–6 km</td></tr>
                             <tr><td>C.C. San Diego</td><td>$8.000–12.000</td><td>~2–3 km</td></tr>
                             <tr><td>Laureles</td><td>$20.000–28.000</td><td>~8–10 km</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="highlight">InDriver permite negociar precios y suele resultar más económico. El 78% de las transacciones en apps de transporte en Colombia se pagan en efectivo.</div>
+                <div class="highlight" data-i18n="mov.cost.hl">InDriver permite negociar precios y suele resultar más económico. El 78% de las transacciones en apps de transporte en Colombia se pagan en efectivo.</div>
             </div>
- 
+
             <div class="card">
-                <h3>Tarifas y horarios</h3>
-                <p>• Metro/Tranvía (2025): $3.430 COP con Cívica · $3.900 ocasional<br>
+                <h3 data-i18n="mov.fares.h">Tarifas y horarios</h3>
+                <p data-i18n="mov.fares.p">• Metro/Tranvía (2025): $3.430 COP con Cívica · $3.900 ocasional<br>
                    • Horario: Lun–Sáb 4:30am–11pm · Dom 5:00am–10pm<br>
                    • Tarifa mínima de taxi (2025): $7.400 COP · Banderazo: $5.100 COP</p>
-                <h4>Apps útiles</h4>
-                <p>🗺️ Moovit (transporte público) · 💳 App Cívica (tarjeta Metro) · 🚗 Waze (tráfico en tiempo real)</p>
+                <h4 data-i18n="mov.fares.h4">Apps útiles</h4>
+                <p data-i18n="mov.fares.p2">🗺️ Moovit (transporte público) · 💳 App Cívica (tarjeta Metro) · 🚗 Waze (tráfico en tiempo real)</p>
             </div>
         </section>
- 
+
         <!-- ============================================================= -->
         <!-- ===== SECCIÓN COMER ===== -->
         <!-- ============================================================= -->
         <section id="comer" class="section">
-            <h2 class="section-title">🍽️ Dónde comer</h2>
- 
+            <h2 class="section-title" data-i18n="com.title">🍽️ Dónde comer</h2>
+
             <div class="card">
-                <h3>En Mall El Indio y alrededores</h3>
+                <h3 data-i18n="com.c1.h">En Mall El Indio y alrededores</h3>
                 <h4>Rodizzio Las Palmas El Indio</h4>
-                <p>Churrascaria brasileña · Cra 38 Cl 26-279, Interior 103, Mall El Indio<br>
+                <p data-i18n="com.c1.p1">Churrascaria brasileña · Cra 38 Cl 26-279, Interior 103, Mall El Indio<br>
                    Especialidad: 11–12 cortes de carne a la parrilla con barra de ensaladas ilimitada.</p>
                 <h4>Azabache Restaurante ⭐ 4.9/5</h4>
-                <p>Parrilla con música en vivo · Zona Las Palmas (a 0.47 millas de Mall El Indio)<br>
+                <p data-i18n="com.c1.p2">Parrilla con música en vivo · Zona Las Palmas (a 0.47 millas de Mall El Indio)<br>
                    Especialidad: Tomahawk steak, ambiente vibrante.</p>
             </div>
- 
+
             <div class="card">
-                <h3>En La Asomadera</h3>
+                <h3 data-i18n="com.c2.h">En La Asomadera</h3>
                 <h4>Balcón de la Asomadera</h4>
-                <p>Americana, Latina, Colombiana · Cra 38d N° 39c 06<br>
+                <p data-i18n="com.c2.p1">Americana, Latina, Colombiana · Cra 38d N° 39c 06<br>
                    Horario: 10:00 AM – 10:00 PM · Acepta solo efectivo.</p>
             </div>
- 
+
             <div class="card">
-                <h3>En Buenos Aires (cerca del Tranvía)</h3>
+                <h3 data-i18n="com.c3.h">En Buenos Aires (cerca del Tranvía)</h3>
                 <h4>Mercado del Tranvía ⭐ 4.3/5</h4>
-                <p>Mercado gastronómico con 21+ conceptos · Calle 49 # 34-29, Buenos Aires<br>
+                <p data-i18n="com.c3.p1">Mercado gastronómico con 21+ conceptos · Calle 49 # 34-29, Buenos Aires<br>
                    Mexicano, Pizza, Peruano, Hamburguesas, Alitas · Junto a estación Buenos Aires.</p>
                 <h4>Floraterraza</h4>
-                <p>Restaurante con cocteles · Carrera 21 47-190.</p>
+                <p data-i18n="com.c3.p2">Restaurante con cocteles · Carrera 21 47-190.</p>
                 <h4>Bóreo</h4>
-                <p>Colombiano, buena relación calidad-precio · Calle 49 #28-16.</p>
+                <p data-i18n="com.c3.p3">Colombiano, buena relación calidad-precio · Calle 49 #28-16.</p>
             </div>
         </section>
- 
+
         <!-- ============================================================= -->
         <!-- ===== SECCIÓN SALUD ===== -->
         <!-- ============================================================= -->
         <section id="salud" class="section">
-            <h2 class="section-title">🏥 Servicios médicos</h2>
- 
+            <h2 class="section-title" data-i18n="sal.title">🏥 Servicios médicos</h2>
+
             <!-- ===== TARJETA NUEVA: CONTACTOS DE EMERGENCIA ===== -->
             <div class="card">
-                <h3>📞 Contactos de emergencia</h3>
-                <div class="list-item"><span class="ico">🚨</span><div><strong>Policía / Bomberos / Ambulancia</strong> · 123</div></div>
-                <div class="list-item"><span class="ico">👤</span><div><strong>Hassen</strong> (anfitrión) · <a href="https://wa.me/573054255364" target="_blank" rel="noopener">+57 305 425 5364</a></div></div>
-                <div class="list-item"><span class="ico">👤</span><div><strong>Paula</strong> (anfitriona) · <a href="https://wa.me/573108449505" target="_blank" rel="noopener">+57 310 844 9505</a></div></div>
+                <h3 data-i18n="sal.emerg.h">📞 Contactos de emergencia</h3>
+                <div class="list-item"><span class="ico">🚨</span><div data-i18n="sal.emerg.i1"><strong>Policía / Bomberos / Ambulancia</strong> · 123</div></div>
+                <div class="list-item"><span class="ico">👤</span><div data-i18n="sal.emerg.i2"><strong>Hassen</strong> (anfitrión) · <a href="https://wa.me/573054255364" target="_blank" rel="noopener">+57 305 425 5364</a></div></div>
+                <div class="list-item"><span class="ico">👤</span><div data-i18n="sal.emerg.i3"><strong>Paula</strong> (anfitriona) · <a href="https://wa.me/573108449505" target="_blank" rel="noopener">+57 310 844 9505</a></div></div>
             </div>
- 
+
             <div class="card">
                 <h3>Clínica Sagrado Corazón</h3>
-                <p><strong>Privado · alta complejidad</strong><br>
+                <p data-i18n="sal.clin1"><strong>Privado · alta complejidad</strong><br>
                    📍 Calle 49 Nº 35-61, Barrio Buenos Aires<br>
                    📞 (604) 215 10 00<br>
                    Servicios: Urgencias 24h, UCI, cirugía, oncología, radiología.</p>
             </div>
- 
+
             <div class="card">
                 <h3>Unidad Hospitalaria Buenos Aires – Metrosalud</h3>
-                <p><strong>Público</strong><br>
+                <p data-i18n="sal.clin2"><strong>Público</strong><br>
                    📍 Calle 50 #31-39, Buenos Aires<br>
                    📞 (604) 511 75 05 Ext. 4400<br>
                    Servicios: Urgencias, consulta médica, vacunación, laboratorio, farmacia.</p>
             </div>
- 
+
             <div class="card">
                 <h3>Centro Médico Buenos Aires</h3>
-                <p><strong>Privado</strong><br>
+                <p data-i18n="sal.clin3"><strong>Privado</strong><br>
                    📍 Calle 49 # 33-23, Buenos Aires<br>
                    Servicios: Consulta general y especializada, laboratorio, tomografía, ecografías.</p>
             </div>
- 
+
             <div class="card">
-                <h3>Farmacias cercanas</h3>
-                <div class="list-item"><span class="ico">💊</span><div><strong>Farmacia Pasteur</strong> · Avenida Ayacucho #89, Buenos Aires · Tel: (4) 4441900</div></div>
-                <div class="list-item"><span class="ico">🚚</span><div><strong>Farmatodo</strong> · Domicilio 24 horas · www.farmatodo.com.co</div></div>
-                <div class="list-item"><span class="ico">🏬</span><div><strong>Droguería Mall El Indio</strong> · Farmacia local dentro del centro comercial</div></div>
-                <div class="list-item"><span class="ico">➕</span><div><strong>Cruz Verde</strong> · Múltiples ubicaciones en Medellín</div></div>
-                <div class="list-item"><span class="ico">🚚</span><div><strong>Droguerías Cafam</strong> · Domicilio 24 horas disponible</div></div>
+                <h3 data-i18n="sal.farm.h">Farmacias cercanas</h3>
+                <div class="list-item"><span class="ico">💊</span><div data-i18n="sal.farm.i1"><strong>Farmacia Pasteur</strong> · Avenida Ayacucho #89, Buenos Aires · Tel: (4) 4441900</div></div>
+                <div class="list-item"><span class="ico">🚚</span><div data-i18n="sal.farm.i2"><strong>Farmatodo</strong> · Domicilio 24 horas · www.farmatodo.com.co</div></div>
+                <div class="list-item"><span class="ico">🏬</span><div data-i18n="sal.farm.i3"><strong>Droguería Mall El Indio</strong> · Farmacia local dentro del centro comercial</div></div>
+                <div class="list-item"><span class="ico">➕</span><div data-i18n="sal.farm.i4"><strong>Cruz Verde</strong> · Múltiples ubicaciones en Medellín</div></div>
+                <div class="list-item"><span class="ico">🚚</span><div data-i18n="sal.farm.i5"><strong>Droguerías Cafam</strong> · Domicilio 24 horas disponible</div></div>
             </div>
         </section>
- 
+
         <!-- ===== FOOTER ===== -->
         <footer class="footer">
-            <p>🌿 ¡Disfrute su estadía en Medellín, la ciudad de la eterna primavera! 🌿</p>
+            <p data-i18n="footer.p1">🌿 ¡Disfrute su estadía en Medellín, la ciudad de la eterna primavera! 🌿</p>
             <p style="margin-top:8px;"><strong>Reserva San Diego 112</strong> · Loma del Indio</p>
-            <p style="margin-top:8px;">Información verificada con fuentes oficiales – Enero 2026</p>
+            <p style="margin-top:8px;" data-i18n="footer.p3">Información verificada con fuentes oficiales – Enero 2026</p>
         </footer>
- 
+
     </div>
- 
+
     <!-- ===== BOTONES FLOTANTES ===== -->
     <div class="floating-buttons">
-        <a href="tel:123" class="fab fab-emergency" title="Emergencias 123">🆘</a>
+        <a href="tel:123" class="fab fab-emergency" title="Emergencias 123" data-i18n-title="fab.emergency">🆘</a>
         <!-- Anfitrión: Hassen -->
-        <a href="https://wa.me/573054255364" class="fab fab-whatsapp" title="WhatsApp Hassen" target="_blank" rel="noopener">💬</a>
+        <a href="https://wa.me/573054255364" class="fab fab-whatsapp" title="WhatsApp Hassen" target="_blank" rel="noopener" data-i18n-title="fab.whatsapp">💬</a>
     </div>
- 
+
     <!-- ===== NAVEGACIÓN INFERIOR ===== -->
     <nav class="bottom-nav">
-        <button class="nav-btn active" data-target="inicio"><span class="nav-ico">🏠</span>Inicio</button>
-        <button class="nav-btn" data-target="registro"><span class="nav-ico">📋</span>Registro</button>
-        <button class="nav-btn" data-target="moverse"><span class="nav-ico">🚌</span>Moverse</button>
-        <button class="nav-btn" data-target="comer"><span class="nav-ico">🍽️</span>Comer</button>
-        <button class="nav-btn" data-target="salud"><span class="nav-ico">🏥</span>Salud</button>
+        <button class="nav-btn active" data-target="inicio"><span class="nav-ico">🏠</span><span data-i18n="nav.inicio">Inicio</span></button>
+        <button class="nav-btn" data-target="registro"><span class="nav-ico">📋</span><span data-i18n="nav.registro">Registro</span></button>
+        <button class="nav-btn" data-target="moverse"><span class="nav-ico">🚌</span><span data-i18n="nav.moverse">Moverse</span></button>
+        <button class="nav-btn" data-target="comer"><span class="nav-ico">🍽️</span><span data-i18n="nav.comer">Comer</span></button>
+        <button class="nav-btn" data-target="salud"><span class="nav-ico">🏥</span><span data-i18n="nav.salud">Salud</span></button>
     </nav>
- 
+
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         // ===== CONFIGURACIÓN ===== 
@@ -781,11 +811,11 @@
             GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyGSnz6C41CF37oaIruUf5VG90fC3cYO86_cDdAiiWeogo6vZePNnzXbX2Sk_Jtbr4bzg/exec',
             ESTABLECIMIENTO: 'Reserva San Diego 112'
         };
- 
+
         // ===== LÓGICA DE NAVEGACIÓN POR PESTAÑAS =====
         const navButtons = document.querySelectorAll('.nav-btn');
         const sections = document.querySelectorAll('.section');
- 
+
         navButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = btn.dataset.target;
@@ -798,14 +828,14 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
- 
+
         // ===== LÓGICA DE ACORDEONES =====
         document.querySelectorAll('[data-accordion]').forEach(acc => {
             acc.querySelector('.accordion-header').addEventListener('click', () => {
                 acc.classList.toggle('active');
             });
         });
- 
+
         // ===== LÓGICA DE FECHAS =====
         const today = new Date().toISOString().split('T')[0];
         const checkinEl = document.getElementById('checkin');
@@ -815,32 +845,32 @@
         checkinEl.addEventListener('change', function () {
             checkoutEl.setAttribute('min', this.value);
         });
- 
+
         // ===== LÓGICA DEL FORMULARIO DE REGISTRO =====
         const form = document.getElementById('registration-form');
         const submitBtn = document.getElementById('submit-btn');
         const formStatus = document.getElementById('form-status');
- 
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
- 
+
             // Validación nativa de campos requeridos
             if (!form.checkValidity()) { form.reportValidity(); return; }
- 
+
             // Validación: check-out posterior a check-in
             const checkin = checkinEl.value;
             const checkout = checkoutEl.value;
             if (checkout <= checkin) {
-                formStatus.textContent = '❌ El check-out debe ser posterior al check-in.';
+                formStatus.textContent = I18N[currentLang]['reg.status.dateError'];
                 formStatus.className = 'form-status show error';
                 return;
             }
- 
+
             // Estado de carga
             submitBtn.classList.add('loading');
-            submitBtn.textContent = 'Enviando...';
+            submitBtn.textContent = I18N[currentLang]['reg.status.sending'];
             formStatus.classList.remove('show');
- 
+
             // Construcción del objeto de datos (claves exactas del Apps Script)
             const data = {
                 establecimiento: CONFIG.ESTABLECIMIENTO,
@@ -858,7 +888,7 @@
                 checkout: checkout,
                 valor_total: document.getElementById('valor_total').value
             };
- 
+
             // ===== ENVÍO AL GOOGLE APPS SCRIPT =====
             // Usamos Content-Type: text/plain para evitar el preflight CORS.
             // Google Apps Script no soporta doOptions() con setHeaders() de forma
@@ -873,18 +903,456 @@
                 });
                 // Con no-cors la respuesta es opaca (no se puede leer),
                 // pero si no hay excepción el fetch llegó al servidor.
-                formStatus.textContent = '✅ ¡Registro enviado! Bienvenido a Reserva San Diego 112.';
+                formStatus.textContent = I18N[currentLang]['reg.status.success'];
                 formStatus.className = 'form-status show success';
                 form.reset();
                 checkinEl.setAttribute('min', today);
             } catch (error) {
-                formStatus.textContent = '❌ Error de red. Verifique su conexión e intente nuevamente.';
+                formStatus.textContent = I18N[currentLang]['reg.status.netError'];
                 formStatus.className = 'form-status show error';
             } finally {
                 submitBtn.classList.remove('loading');
-                submitBtn.textContent = 'Enviar registro';
+                submitBtn.textContent = I18N[currentLang]['reg.btn.submit'];
             }
         });
+
+        // ============================================================= 
+        // ===== INTERNACIONALIZACIÓN (ES / EN) =====
+        // Único cambio funcional agregado. NO toca el payload ni el endpoint.
+        // Cada valor guarda el innerHTML completo (con <strong>, <a>, <br>,
+        // cifras y nombres propios intactos) para no degradar el markup.
+        // =============================================================
+        const I18N = {
+            es: {
+                // ----- meta / header -----
+                'page-title': '🏙️ Reserva San Diego 112 · Guía del Huésped',
+                'meta-description': 'Guía digital para huéspedes de Reserva San Diego 112, Loma del Indio, Medellín',
+                'header.subtitle': 'Loma del Indio · Medellín, Colombia',
+                'header.chip1': 'Estrato 4–5',
+                'header.chip2': '1.550–1.650 msnm',
+                // ----- nav inferior -----
+                'nav.inicio': 'Inicio',
+                'nav.registro': 'Registro',
+                'nav.moverse': 'Moverse',
+                'nav.comer': 'Comer',
+                'nav.salud': 'Salud',
+                // ----- botones flotantes (title) -----
+                'fab.emergency': 'Emergencias 123',
+                'fab.whatsapp': 'WhatsApp Hassen',
+                // ----- Inicio -----
+                'inicio.title': '👋 Bienvenido',
+                'inicio.p1': 'La Reserva de San Diego (Carrera 28 No. 29-85) se encuentra en uno de los sectores más estratégicos de Medellín: las laderas orientales con acceso directo al Túnel de Oriente, conexión al Tranvía de Ayacucho y vistas panorámicas del Valle de Aburrá.',
+                'inicio.p2': 'Esta zona residencial de estrato 4–5 combina la tranquilidad de un barrio tradicional con la modernidad de unidades cerradas y centros comerciales cercanos. El sector está entre 1.550 y 1.650 metros sobre el nivel del mar, con clima primaveral todo el año (21–24 °C).',
+                'inicio.highlight': 'El sector limita con el Cerro La Asomadera, un área natural protegida de 26,63 hectáreas a pocos minutos a pie.',
+                // acordeón aeropuerto
+                'acc.airport.h': '✈️ Cómo llegar desde el aeropuerto',
+                'acc.airport.p': 'El Aeropuerto Internacional José María Córdova (MDE) está a unos 29–35 km del sector. La ruta más rápida es por el Túnel de Oriente (25–35 min); la vía escénica por Las Palmas toma 40–50 min.',
+                'acc.airport.th1': 'Opción',
+                'acc.airport.th2': 'Costo aprox.',
+                'acc.airport.th3': 'Notas',
+                'acc.airport.r1c1': 'Taxi amarillo oficial',
+                'acc.airport.r1c3': 'Tarifa fija con peajes incluidos, 24/7',
+                'acc.airport.r2c3': 'Precio dinámico según demanda',
+                'acc.airport.r3c1': 'Combuses (bus San Diego)',
+                'acc.airport.r3c3': 'Sale del C.C. San Diego cada 15 min',
+                'acc.airport.r4c1': 'Taxi compartido blanco',
+                'acc.airport.r4c3': 'Salen cuando se llenan desde zona San Diego',
+                'acc.airport.hl': '<strong>Opción económica:</strong> bus Combuses hasta San Diego ($9.500) + taxi/Uber hasta Loma del Indio (~$12.000). Total aproximado: <strong>$22.000 COP</strong>.',
+                // acordeón metro
+                'acc.metro.h': '🚉 Metro y Tranvía cercanos',
+                'acc.metro.p': 'El sector tiene excelente conectividad gracias al Tranvía de Ayacucho (Línea T), inaugurado en 2016.',
+                'acc.metro.h4': 'Estaciones más cercanas',
+                'acc.metro.p2': '• <strong>Bicentenario</strong> – la más cercana (~15 min caminando)<br>\n                       • <strong>Buenos Aires</strong> – cerca de Carrera 30 (~10–15 min)<br>\n                       • <strong>Miraflores</strong> – conecta con Metrocable Línea M (~20 min)',
+                'acc.metro.hl': 'Tarifa Metro/Tranvía (2025): <strong>$3.430 COP</strong> con tarjeta Cívica · $3.900 COP tarifa ocasional.',
+                // acordeón asomadera
+                'acc.asomadera.h': '🌳 Cerro La Asomadera',
+                'acc.asomadera.p': 'Área natural protegida a pocos minutos caminando. Horario: 5:30 AM – 6:00 PM. Acceso: buses 091 o 13.',
+                'acc.asomadera.p2': '• 2,6+ km de senderos marcados<br>\n                       • Piscina gratuita INDER (Mar–Vie 8am–5pm, Sáb 8am–3pm, Dom 8am–4pm)<br>\n                       • Mirador natural con vista 360° del Valle de Aburrá<br>\n                       • 152+ especies de árboles nativos y 42+ especies de aves<br>\n                       • Mariposario, meliponario y vivero pedagógico<br>\n                       • Zona de camping y juegos infantiles',
+                // acordeón malls
+                'acc.malls.h': '🛒 Centros comerciales y supermercados',
+                'acc.malls.th1': 'Mall',
+                'acc.malls.th2': 'Dirección',
+                'acc.malls.th3': 'Destacados',
+                'acc.malls.r1c3': 'D1, Fruver, farmacia, comidas rápidas. 7am–8pm',
+                'acc.malls.r2c3': 'L–S 8am–8pm · Dom 9am–6pm',
+                'acc.malls.h4': 'Supermercados',
+                'acc.malls.hl': '🏬 <strong>Minimercado dentro de la Unidad Residencial</strong> — disponible sin salir del conjunto, además de los supermercados externos listados arriba.',
+                // acordeón llaves
+                'acc.keys.h': '🔑 Acceso y llaves',
+                'acc.keys.h4a': 'Portería de la unidad',
+                'acc.keys.pa': 'Portería 24 horas. El huésped principal debe autorizar previamente a sí mismo y a sus acompañantes para poder ingresar.',
+                'acc.keys.h4b': 'Apartamento (Piso 1)',
+                'acc.keys.pb': 'Acceso autónomo con cerradura digital — no requiere recoger llaves físicas para entrar al apartamento.',
+                'acc.keys.hl': '🔐 El código de la cerradura digital se lo enviará su anfitrión por WhatsApp al momento de su llegada. <a href="https://wa.me/573054255364" target="_blank" rel="noopener">Escribir a Hassen</a>',
+                'acc.keys.h4c': 'Balcón / terraza',
+                'acc.keys.pc': 'La reja de acceso a la terraza se abre con llave física, entregada junto con la información de check-in.',
+                // acordeón wifi
+                'acc.wifi.h': '📶 Wifi',
+                'acc.wifi.hl': '📶 Red: <strong>PaulaCruz</strong><br>\n                        Contraseña: <strong>3054255364</strong>',
+                // acordeón habitaciones
+                'acc.rooms.h': '🛏️ Habitaciones',
+                'acc.rooms.h4a': 'Habitación Principal — capacidad 2 personas',
+                'acc.rooms.pa': '• 1 cama Queen + 2 mesas de noche<br>\n                       • 1 Smart TV<br>\n                       • 1 closet + 1 mueble de almacenamiento',
+                'acc.rooms.h4b': 'Habitación de Huéspedes — capacidad 3 personas',
+                'acc.rooms.pb': '• 1 cama doble + 1 cama nicho<br>\n                       • 1 closet<br>\n                       • 1 escritorio + silla',
+                'acc.rooms.hl': '👥 Capacidad total del apartamento: <strong>5 personas</strong> (2 en Habitación Principal + 3 en Habitación de Huéspedes).',
+                // acordeón cocina
+                'acc.kitchen.h': '🍳 Cocina',
+                'acc.kitchen.p': '• Nevera<br>\n                       • Estufa a gas<br>\n                       • Horno microondas<br>\n                       • Cafetera<br>\n                       • Tostadora de pan<br>\n                       • Batería de ollas<br>\n                       • Vajilla para 4 personas + copas de vino',
+                // acordeón comodidades
+                'acc.amen.h': '🏊 Comodidades del edificio',
+                'acc.amen.h4a': 'Piscina del edificio',
+                'acc.amen.pa': 'Martes a domingo, 9:00 AM – 7:00 PM. Se requiere gorro de baño para el ingreso.',
+                'acc.amen.h4b': 'Gimnasio del edificio',
+                'acc.amen.pb': 'Lunes a domingo, 6:00 AM – 10:00 PM.',
+                'acc.amen.hl': '📌 Estas son las instalaciones privadas de la unidad residencial — no confundir con la piscina pública gratuita del Cerro La Asomadera (sección Inicio), que tiene horarios y reglas distintas.',
+                // acordeón normas
+                'acc.rules.h': '📋 Normas de la casa',
+                'acc.rules.p': '• Horario de silencio: 11:00 PM – 7:00 AM<br>\n                       • Identificarse en portería al entrar por primera vez<br>\n                       • Registrar visitas en portería<br>\n                       • Basuras únicamente en los contenedores designados',
+                // ----- Registro -----
+                'reg.title': '📋 Registro de huéspedes',
+                'reg.intro': 'Complete este formulario de registro para todos los huéspedes mayores de edad. Los campos marcados con <strong>*</strong> son obligatorios.',
+                'reg.lbl.tipo_id': 'Tipo documento *',
+                'reg.lbl.numero_id': 'Número documento *',
+                'reg.lbl.nombres': 'Nombres *',
+                'reg.lbl.apellidos': 'Apellidos *',
+                'reg.lbl.ciudad_residencia': 'Ciudad residencia *',
+                'reg.lbl.ciudad_procedencia': 'Ciudad procedencia *',
+                'reg.lbl.habitacion': 'Habitación *',
+                'reg.lbl.acompanantes': 'Acompañantes',
+                'reg.lbl.motivo_viaje': 'Motivo viaje *',
+                'reg.lbl.tipo_acomodacion': 'Acomodación *',
+                'reg.lbl.checkin': 'Check-in *',
+                'reg.lbl.checkout': 'Check-out *',
+                'reg.lbl.valor_total': 'Valor total (COP) *',
+                'reg.ph.valor_total': 'Ej: 250000',
+                'reg.opt.select': 'Seleccione...',
+                'reg.opt.cc': 'Cédula Ciudadanía',
+                'reg.opt.ce': 'Cédula Extranjería',
+                'reg.opt.pasaporte': 'Pasaporte',
+                'reg.opt.ti': 'Tarjeta Identidad',
+                'reg.opt.principal': 'Principal',
+                'reg.opt.secundaria': 'Secundaria',
+                'reg.opt.completo': 'Apto. Completo',
+                'reg.opt.turismo': 'Turismo',
+                'reg.opt.negocios': 'Negocios',
+                'reg.opt.estudios': 'Estudios',
+                'reg.opt.salud': 'Salud',
+                'reg.opt.familiar': 'Familiar',
+                'reg.opt.individual': 'Individual',
+                'reg.opt.doble': 'Doble',
+                'reg.opt.triple': 'Triple',
+                'reg.btn.submit': 'Enviar registro',
+                'reg.checkout.h': '✅ Antes de salir, verifique',
+                'reg.checkout.i1': 'Lavar la vajilla e implementos de cocina',
+                'reg.checkout.i2': 'Botar la basura en los contenedores',
+                'reg.checkout.i3': 'Apagar A/C y ventiladores',
+                'reg.checkout.i4': 'Apagar las luces',
+                'reg.checkout.i5': 'Cerrar ventanas',
+                'reg.checkout.i6': 'Notificar daños o reparaciones pendientes',
+                'reg.checkout.i7': 'Enviar mensaje de salida a su anfitrión',
+                // mensajes de estado del formulario (usados por JS)
+                'reg.status.dateError': '❌ El check-out debe ser posterior al check-in.',
+                'reg.status.sending': 'Enviando...',
+                'reg.status.success': '✅ ¡Registro enviado! Bienvenido a Reserva San Diego 112.',
+                'reg.status.netError': '❌ Error de red. Verifique su conexión e intente nuevamente.',
+                // ----- Moverse -----
+                'mov.title': '🚌 Moverse por la ciudad',
+                'mov.apps.h': 'Apps de transporte verificadas',
+                'mov.apps.th1': 'App',
+                'mov.apps.th2': 'Pago',
+                'mov.apps.th3': 'Notas',
+                'mov.apps.r1c2': 'Tarjeta, efectivo',
+                'mov.apps.r1c3': 'Muy usado; puede requerir sentarse adelante',
+                'mov.apps.r2c2': 'Efectivo preferido',
+                'mov.apps.r2c3': 'Negociación de precio, muy popular',
+                'mov.apps.r3c2': 'Tarjeta, efectivo',
+                'mov.apps.r3c3': 'Precios competitivos',
+                'mov.apps.r4c2': 'Tarjeta, efectivo',
+                'mov.apps.r4c3': '25–30% más económico que taxis',
+                'mov.apps.r5c2': 'Tarjeta, efectivo',
+                'mov.apps.r5c3': 'Conecta también con taxis amarillos',
+                'mov.apps.r6c2': 'Efectivo',
+                'mov.apps.r6c3': 'Mototaxis',
+                'mov.cost.h': 'Costos aproximados desde Loma del Indio',
+                'mov.cost.th1': 'Destino',
+                'mov.cost.th2': 'Taxi/Uber',
+                'mov.cost.th3': 'Distancia',
+                'mov.cost.r1c1': 'Centro de Medellín',
+                'mov.cost.hl': 'InDriver permite negociar precios y suele resultar más económico. El 78% de las transacciones en apps de transporte en Colombia se pagan en efectivo.',
+                'mov.fares.h': 'Tarifas y horarios',
+                'mov.fares.p': '• Metro/Tranvía (2025): $3.430 COP con Cívica · $3.900 ocasional<br>\n                   • Horario: Lun–Sáb 4:30am–11pm · Dom 5:00am–10pm<br>\n                   • Tarifa mínima de taxi (2025): $7.400 COP · Banderazo: $5.100 COP',
+                'mov.fares.h4': 'Apps útiles',
+                'mov.fares.p2': '🗺️ Moovit (transporte público) · 💳 App Cívica (tarjeta Metro) · 🚗 Waze (tráfico en tiempo real)',
+                // ----- Comer -----
+                'com.title': '🍽️ Dónde comer',
+                'com.c1.h': 'En Mall El Indio y alrededores',
+                'com.c1.p1': 'Churrascaria brasileña · Cra 38 Cl 26-279, Interior 103, Mall El Indio<br>\n                   Especialidad: 11–12 cortes de carne a la parrilla con barra de ensaladas ilimitada.',
+                'com.c1.p2': 'Parrilla con música en vivo · Zona Las Palmas (a 0.47 millas de Mall El Indio)<br>\n                   Especialidad: Tomahawk steak, ambiente vibrante.',
+                'com.c2.h': 'En La Asomadera',
+                'com.c2.p1': 'Americana, Latina, Colombiana · Cra 38d N° 39c 06<br>\n                   Horario: 10:00 AM – 10:00 PM · Acepta solo efectivo.',
+                'com.c3.h': 'En Buenos Aires (cerca del Tranvía)',
+                'com.c3.p1': 'Mercado gastronómico con 21+ conceptos · Calle 49 # 34-29, Buenos Aires<br>\n                   Mexicano, Pizza, Peruano, Hamburguesas, Alitas · Junto a estación Buenos Aires.',
+                'com.c3.p2': 'Restaurante con cocteles · Carrera 21 47-190.',
+                'com.c3.p3': 'Colombiano, buena relación calidad-precio · Calle 49 #28-16.',
+                // ----- Salud -----
+                'sal.title': '🏥 Servicios médicos',
+                'sal.emerg.h': '📞 Contactos de emergencia',
+                'sal.emerg.i1': '<strong>Policía / Bomberos / Ambulancia</strong> · 123',
+                'sal.emerg.i2': '<strong>Hassen</strong> (anfitrión) · <a href="https://wa.me/573054255364" target="_blank" rel="noopener">+57 305 425 5364</a>',
+                'sal.emerg.i3': '<strong>Paula</strong> (anfitriona) · <a href="https://wa.me/573108449505" target="_blank" rel="noopener">+57 310 844 9505</a>',
+                'sal.clin1': '<strong>Privado · alta complejidad</strong><br>\n                   📍 Calle 49 Nº 35-61, Barrio Buenos Aires<br>\n                   📞 (604) 215 10 00<br>\n                   Servicios: Urgencias 24h, UCI, cirugía, oncología, radiología.',
+                'sal.clin2': '<strong>Público</strong><br>\n                   📍 Calle 50 #31-39, Buenos Aires<br>\n                   📞 (604) 511 75 05 Ext. 4400<br>\n                   Servicios: Urgencias, consulta médica, vacunación, laboratorio, farmacia.',
+                'sal.clin3': '<strong>Privado</strong><br>\n                   📍 Calle 49 # 33-23, Buenos Aires<br>\n                   Servicios: Consulta general y especializada, laboratorio, tomografía, ecografías.',
+                'sal.farm.h': 'Farmacias cercanas',
+                'sal.farm.i1': '<strong>Farmacia Pasteur</strong> · Avenida Ayacucho #89, Buenos Aires · Tel: (4) 4441900',
+                'sal.farm.i2': '<strong>Farmatodo</strong> · Domicilio 24 horas · www.farmatodo.com.co',
+                'sal.farm.i3': '<strong>Droguería Mall El Indio</strong> · Farmacia local dentro del centro comercial',
+                'sal.farm.i4': '<strong>Cruz Verde</strong> · Múltiples ubicaciones en Medellín',
+                'sal.farm.i5': '<strong>Droguerías Cafam</strong> · Domicilio 24 horas disponible',
+                // ----- Footer -----
+                'footer.p1': '🌿 ¡Disfrute su estadía en Medellín, la ciudad de la eterna primavera! 🌿',
+                'footer.p3': 'Información verificada con fuentes oficiales – Enero 2026'
+            },
+            en: {
+                // ----- meta / header -----
+                'page-title': '🏙️ Reserva San Diego 112 · Guest Guide',
+                'meta-description': 'Digital guide for guests of Reserva San Diego 112, Loma del Indio, Medellín',
+                'header.subtitle': 'Loma del Indio · Medellín, Colombia',
+                'header.chip1': 'Socioeconomic tier 4–5',
+                'header.chip2': '1,550–1,650 m a.s.l.',
+                // ----- nav inferior -----
+                'nav.inicio': 'Home',
+                'nav.registro': 'Check-in',
+                'nav.moverse': 'Getting around',
+                'nav.comer': 'Eating',
+                'nav.salud': 'Health',
+                // ----- botones flotantes (title) -----
+                'fab.emergency': 'Emergencies 123',
+                'fab.whatsapp': 'WhatsApp Hassen',
+                // ----- Inicio -----
+                'inicio.title': '👋 Welcome',
+                'inicio.p1': 'Reserva de San Diego (Carrera 28 No. 29-85) sits in one of Medellín\'s most strategic areas: the eastern hillsides with direct access to the Túnel de Oriente, a connection to the Tranvía de Ayacucho, and panoramic views of the Aburrá Valley.',
+                'inicio.p2': 'This tier 4–5 residential area combines the calm of a traditional neighborhood with the modern comfort of gated communities and nearby shopping centers. The area lies between 1,550 and 1,650 meters above sea level, with spring-like weather all year round (21–24 °C).',
+                'inicio.highlight': 'The area borders Cerro La Asomadera, a 26.63-hectare protected natural reserve just a few minutes away on foot.',
+                // acordeón aeropuerto
+                'acc.airport.h': '✈️ Getting here from the airport',
+                'acc.airport.p': 'José María Córdova International Airport (MDE) is about 29–35 km from the area. The fastest route is through the Túnel de Oriente (25–35 min); the scenic route via Las Palmas takes 40–50 min.',
+                'acc.airport.th1': 'Option',
+                'acc.airport.th2': 'Approx. cost',
+                'acc.airport.th3': 'Notes',
+                'acc.airport.r1c1': 'Official yellow taxi',
+                'acc.airport.r1c3': 'Flat fare with tolls included, 24/7',
+                'acc.airport.r2c3': 'Dynamic pricing based on demand',
+                'acc.airport.r3c1': 'Combuses (San Diego bus)',
+                'acc.airport.r3c3': 'Departs from C.C. San Diego every 15 min',
+                'acc.airport.r4c1': 'Shared white taxi',
+                'acc.airport.r4c3': 'Leave once full from the San Diego area',
+                'acc.airport.hl': '<strong>Budget option:</strong> Combuses bus to San Diego ($9.500) + taxi/Uber to Loma del Indio (~$12.000). Approximate total: <strong>$22.000 COP</strong>.',
+                // acordeón metro
+                'acc.metro.h': '🚉 Nearby Metro and Tram',
+                'acc.metro.p': 'The area has excellent connectivity thanks to the Tranvía de Ayacucho (Line T), opened in 2016.',
+                'acc.metro.h4': 'Closest stations',
+                'acc.metro.p2': '• <strong>Bicentenario</strong> – the closest (~15 min walk)<br>\n                       • <strong>Buenos Aires</strong> – near Carrera 30 (~10–15 min)<br>\n                       • <strong>Miraflores</strong> – connects with Metrocable Line M (~20 min)',
+                'acc.metro.hl': 'Metro/Tram fare (2025): <strong>$3.430 COP</strong> with a Cívica card · $3.900 COP occasional fare.',
+                // acordeón asomadera
+                'acc.asomadera.h': '🌳 Cerro La Asomadera',
+                'acc.asomadera.p': 'Protected natural reserve a few minutes away on foot. Hours: 5:30 AM – 6:00 PM. Access: buses 091 or 13.',
+                'acc.asomadera.p2': '• 2.6+ km of marked trails<br>\n                       • Free INDER pool (Tue–Fri 8am–5pm, Sat 8am–3pm, Sun 8am–4pm)<br>\n                       • Natural lookout with 360° views of the Aburrá Valley<br>\n                       • 152+ native tree species and 42+ bird species<br>\n                       • Butterfly house, native-bee sanctuary, and educational nursery<br>\n                       • Camping area and children\'s playground',
+                // acordeón malls
+                'acc.malls.h': '🛒 Shopping centers and supermarkets',
+                'acc.malls.th1': 'Mall',
+                'acc.malls.th2': 'Address',
+                'acc.malls.th3': 'Highlights',
+                'acc.malls.r1c3': 'D1, Fruver, pharmacy, fast food. 7am–8pm',
+                'acc.malls.r2c3': 'Mon–Sat 8am–8pm · Sun 9am–6pm',
+                'acc.malls.h4': 'Supermarkets',
+                'acc.malls.hl': '🏬 <strong>Mini-market inside the residential complex</strong> — available without leaving the community, in addition to the external supermarkets listed above.',
+                // acordeón llaves
+                'acc.keys.h': '🔑 Access and keys',
+                'acc.keys.h4a': 'Building front desk',
+                'acc.keys.pa': '24-hour front desk. The main guest must pre-authorize themselves and their companions in order to enter.',
+                'acc.keys.h4b': 'Apartment (1st floor)',
+                'acc.keys.pb': 'Self check-in with a digital lock — no need to pick up physical keys to enter the apartment.',
+                'acc.keys.hl': '🔐 Your host will send you the digital lock code via WhatsApp when you arrive. <a href="https://wa.me/573054255364" target="_blank" rel="noopener">Message Hassen</a>',
+                'acc.keys.h4c': 'Balcony / terrace',
+                'acc.keys.pc': 'The terrace access gate opens with a physical key, provided together with the check-in information.',
+                // acordeón wifi
+                'acc.wifi.h': '📶 Wifi',
+                'acc.wifi.hl': '📶 Network: <strong>PaulaCruz</strong><br>\n                        Password: <strong>3054255364</strong>',
+                // acordeón habitaciones
+                'acc.rooms.h': '🛏️ Bedrooms',
+                'acc.rooms.h4a': 'Main Bedroom — capacity 2 people',
+                'acc.rooms.pa': '• 1 Queen bed + 2 nightstands<br>\n                       • 1 Smart TV<br>\n                       • 1 closet + 1 storage unit',
+                'acc.rooms.h4b': 'Guest Bedroom — capacity 3 people',
+                'acc.rooms.pb': '• 1 double bed + 1 nook bed<br>\n                       • 1 closet<br>\n                       • 1 desk + chair',
+                'acc.rooms.hl': '👥 Total apartment capacity: <strong>5 people</strong> (2 in the Main Bedroom + 3 in the Guest Bedroom).',
+                // acordeón cocina
+                'acc.kitchen.h': '🍳 Kitchen',
+                'acc.kitchen.p': '• Refrigerator<br>\n                       • Gas stove<br>\n                       • Microwave oven<br>\n                       • Coffee maker<br>\n                       • Toaster<br>\n                       • Cookware set<br>\n                       • Tableware for 4 + wine glasses',
+                // acordeón comodidades
+                'acc.amen.h': '🏊 Building amenities',
+                'acc.amen.h4a': 'Building pool',
+                'acc.amen.pa': 'Tuesday to Sunday, 9:00 AM – 7:00 PM. A swim cap is required for entry.',
+                'acc.amen.h4b': 'Building gym',
+                'acc.amen.pb': 'Monday to Sunday, 6:00 AM – 10:00 PM.',
+                'acc.amen.hl': '📌 These are the private facilities of the residential complex — not to be confused with the free public pool at Cerro La Asomadera (Home section), which has different hours and rules.',
+                // acordeón normas
+                'acc.rules.h': '📋 House rules',
+                'acc.rules.p': '• Quiet hours: 11:00 PM – 7:00 AM<br>\n                       • Identify yourself at the front desk on your first entry<br>\n                       • Register visitors at the front desk<br>\n                       • Trash only in the designated containers',
+                // ----- Registro -----
+                'reg.title': '📋 Guest check-in',
+                'reg.intro': 'Please complete this check-in form for all guests of legal age. Fields marked with <strong>*</strong> are required.',
+                'reg.lbl.tipo_id': 'Document type *',
+                'reg.lbl.numero_id': 'Document number *',
+                'reg.lbl.nombres': 'First name(s) *',
+                'reg.lbl.apellidos': 'Last name(s) *',
+                'reg.lbl.ciudad_residencia': 'City of residence *',
+                'reg.lbl.ciudad_procedencia': 'City of origin *',
+                'reg.lbl.habitacion': 'Bedroom *',
+                'reg.lbl.acompanantes': 'Companions',
+                'reg.lbl.motivo_viaje': 'Purpose of trip *',
+                'reg.lbl.tipo_acomodacion': 'Accommodation *',
+                'reg.lbl.checkin': 'Check-in *',
+                'reg.lbl.checkout': 'Check-out *',
+                'reg.lbl.valor_total': 'Total amount (COP) *',
+                'reg.ph.valor_total': 'e.g.: 250000',
+                'reg.opt.select': 'Select...',
+                'reg.opt.cc': 'Citizen ID (Cédula de Ciudadanía)',
+                'reg.opt.ce': 'Foreigner ID (Cédula de Extranjería)',
+                'reg.opt.pasaporte': 'Passport',
+                'reg.opt.ti': 'Identity Card (Tarjeta de Identidad)',
+                'reg.opt.principal': 'Main',
+                'reg.opt.secundaria': 'Secondary',
+                'reg.opt.completo': 'Entire apt.',
+                'reg.opt.turismo': 'Tourism',
+                'reg.opt.negocios': 'Business',
+                'reg.opt.estudios': 'Studies',
+                'reg.opt.salud': 'Health',
+                'reg.opt.familiar': 'Family',
+                'reg.opt.individual': 'Single',
+                'reg.opt.doble': 'Double',
+                'reg.opt.triple': 'Triple',
+                'reg.btn.submit': 'Submit check-in',
+                'reg.checkout.h': '✅ Before you leave, check',
+                'reg.checkout.i1': 'Wash the dishes and kitchen utensils',
+                'reg.checkout.i2': 'Take out the trash to the containers',
+                'reg.checkout.i3': 'Turn off A/C and fans',
+                'reg.checkout.i4': 'Turn off the lights',
+                'reg.checkout.i5': 'Close the windows',
+                'reg.checkout.i6': 'Report any damage or pending repairs',
+                'reg.checkout.i7': 'Send a check-out message to your host',
+                // mensajes de estado del formulario (usados por JS)
+                'reg.status.dateError': '❌ Check-out must be later than check-in.',
+                'reg.status.sending': 'Sending...',
+                'reg.status.success': '✅ Check-in submitted! Welcome to Reserva San Diego 112.',
+                'reg.status.netError': '❌ Network error. Please check your connection and try again.',
+                // ----- Moverse -----
+                'mov.title': '🚌 Getting around the city',
+                'mov.apps.h': 'Verified ride-hailing apps',
+                'mov.apps.th1': 'App',
+                'mov.apps.th2': 'Payment',
+                'mov.apps.th3': 'Notes',
+                'mov.apps.r1c2': 'Card, cash',
+                'mov.apps.r1c3': 'Widely used; you may be asked to sit up front',
+                'mov.apps.r2c2': 'Cash preferred',
+                'mov.apps.r2c3': 'Price negotiation, very popular',
+                'mov.apps.r3c2': 'Card, cash',
+                'mov.apps.r3c3': 'Competitive prices',
+                'mov.apps.r4c2': 'Card, cash',
+                'mov.apps.r4c3': '25–30% cheaper than taxis',
+                'mov.apps.r5c2': 'Card, cash',
+                'mov.apps.r5c3': 'Also connects with yellow taxis',
+                'mov.apps.r6c2': 'Cash',
+                'mov.apps.r6c3': 'Motorcycle taxis',
+                'mov.cost.h': 'Approximate costs from Loma del Indio',
+                'mov.cost.th1': 'Destination',
+                'mov.cost.th2': 'Taxi/Uber',
+                'mov.cost.th3': 'Distance',
+                'mov.cost.r1c1': 'Downtown Medellín',
+                'mov.cost.hl': 'InDriver lets you negotiate prices and is usually cheaper. 78% of ride-hailing app transactions in Colombia are paid in cash.',
+                'mov.fares.h': 'Fares and schedules',
+                'mov.fares.p': '• Metro/Tram (2025): $3.430 COP with Cívica · $3.900 occasional<br>\n                   • Hours: Mon–Sat 4:30am–11pm · Sun 5:00am–10pm<br>\n                   • Minimum taxi fare (2025): $7.400 COP · Flag drop: $5.100 COP',
+                'mov.fares.h4': 'Useful apps',
+                'mov.fares.p2': '🗺️ Moovit (public transit) · 💳 Cívica app (Metro card) · 🚗 Waze (real-time traffic)',
+                // ----- Comer -----
+                'com.title': '🍽️ Where to eat',
+                'com.c1.h': 'At Mall El Indio and nearby',
+                'com.c1.p1': 'Brazilian churrascaria · Cra 38 Cl 26-279, Interior 103, Mall El Indio<br>\n                   Specialty: 11–12 grilled cuts of meat with an unlimited salad bar.',
+                'com.c1.p2': 'Grill with live music · Las Palmas area (0.47 miles from Mall El Indio)<br>\n                   Specialty: Tomahawk steak, lively atmosphere.',
+                'com.c2.h': 'At La Asomadera',
+                'com.c2.p1': 'American, Latin, Colombian · Cra 38d N° 39c 06<br>\n                   Hours: 10:00 AM – 10:00 PM · Cash only.',
+                'com.c3.h': 'In Buenos Aires (near the Tram)',
+                'com.c3.p1': 'Food hall with 21+ concepts · Calle 49 # 34-29, Buenos Aires<br>\n                   Mexican, Pizza, Peruvian, Burgers, Wings · Next to Buenos Aires station.',
+                'com.c3.p2': 'Restaurant with cocktails · Carrera 21 47-190.',
+                'com.c3.p3': 'Colombian, great value for money · Calle 49 #28-16.',
+                // ----- Salud -----
+                'sal.title': '🏥 Medical services',
+                'sal.emerg.h': '📞 Emergency contacts',
+                'sal.emerg.i1': '<strong>Police / Fire / Ambulance</strong> · 123',
+                'sal.emerg.i2': '<strong>Hassen</strong> (host) · <a href="https://wa.me/573054255364" target="_blank" rel="noopener">+57 305 425 5364</a>',
+                'sal.emerg.i3': '<strong>Paula</strong> (host) · <a href="https://wa.me/573108449505" target="_blank" rel="noopener">+57 310 844 9505</a>',
+                'sal.clin1': '<strong>Private · high complexity</strong><br>\n                   📍 Calle 49 Nº 35-61, Barrio Buenos Aires<br>\n                   📞 (604) 215 10 00<br>\n                   Services: 24h ER, ICU, surgery, oncology, radiology.',
+                'sal.clin2': '<strong>Public</strong><br>\n                   📍 Calle 50 #31-39, Buenos Aires<br>\n                   📞 (604) 511 75 05 Ext. 4400<br>\n                   Services: ER, medical consultation, vaccination, laboratory, pharmacy.',
+                'sal.clin3': '<strong>Private</strong><br>\n                   📍 Calle 49 # 33-23, Buenos Aires<br>\n                   Services: General and specialized consultation, laboratory, CT scan, ultrasound.',
+                'sal.farm.h': 'Nearby pharmacies',
+                'sal.farm.i1': '<strong>Farmacia Pasteur</strong> · Avenida Ayacucho #89, Buenos Aires · Tel: (4) 4441900',
+                'sal.farm.i2': '<strong>Farmatodo</strong> · 24-hour delivery · www.farmatodo.com.co',
+                'sal.farm.i3': '<strong>Droguería Mall El Indio</strong> · Local pharmacy inside the shopping center',
+                'sal.farm.i4': '<strong>Cruz Verde</strong> · Multiple locations across Medellín',
+                'sal.farm.i5': '<strong>Droguerías Cafam</strong> · 24-hour delivery available',
+                // ----- Footer -----
+                'footer.p1': '🌿 Enjoy your stay in Medellín, the city of eternal spring! 🌿',
+                'footer.p3': 'Information verified with official sources – January 2026'
+            }
+        };
+
+        // Idioma activo. Se usa variable JS en lugar de localStorage para que
+        // funcione tanto en el sitio desplegado como en la vista previa de artefactos.
+        let currentLang = 'es';
+
+        function applyLanguage(lang) {
+            const dict = I18N[lang];
+            if (!dict) return;
+            currentLang = lang;
+
+            // Texto/HTML interno de los elementos marcados
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key] !== undefined) el.innerHTML = dict[key];
+            });
+            // Placeholders
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+            });
+            // Atributos title (botones flotantes)
+            document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                const key = el.getAttribute('data-i18n-title');
+                if (dict[key] !== undefined) el.setAttribute('title', dict[key]);
+            });
+            // <title> y meta description
+            const titleEl = document.getElementById('page-title');
+            if (titleEl && dict['page-title']) titleEl.textContent = dict['page-title'];
+            const metaEl = document.getElementById('meta-description');
+            if (metaEl && dict['meta-description']) metaEl.setAttribute('content', dict['meta-description']);
+
+            // Atributo lang del <html>
+            document.documentElement.setAttribute('lang', lang);
+
+            // Estado visual de los botones ES/EN
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+        });
+
+        // Idioma por defecto: español (el HTML ya está en español, esto solo
+        // sincroniza el estado del botón activo).
+        applyLanguage('es');
     </script>
 </body>
 </html>
